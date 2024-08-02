@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { 
     Form,
     FormControl,
-    FormDescription, 
     FormField,
     FormItem,
     FormMessage
@@ -17,45 +16,46 @@ import {
  } from "@/components/ui/form";
 
  import{ Button } from "@/components/ui/button";
- import{ Input } from "@/components/ui/input";
-//  import Link from "next/link";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
-import { Editor } from "@/components/editor";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+import { Chapter } from "@prisma/client";
 
- const formFormat = z.object({
-    title: z.string().min(1),
+interface ChapterDesFormProps {
+    initialData: Chapter;
+    courseId: string;
+    chapterId: string
+}
+
+const formFormat = z.object({
+    description: z.string().min(1)
 
  })
 
-interface ChapterTitleFormProps {
-    initialData: {
-        title: string;
-    }
-    courseId: string;
-    chapterId: string;
-}
-
-export const ChapterTitleForm = ({
+export const ChapterDesForm = ({
     initialData, 
     courseId,
     chapterId
-}: ChapterTitleFormProps) => {
+}: ChapterDesFormProps) => {
     const [ isEditing, setIsEditing ] = useState(false)
     const toggleEditing = () => setIsEditing((current) => !current)
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formFormat>>({
         resolver: zodResolver(formFormat),
-        defaultValues: initialData
+        defaultValues: {
+            description: initialData?.description || ""
+        }
     })
 
     const {isSubmitting, isValid} = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formFormat>) => {
-        console.log(values)
+        // console.log(values)
         try{
             const response = await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
+            console.log(response)
             toast.success("Chapter Updated", {
                 style: {
                     borderRadius: '10px',
@@ -82,7 +82,7 @@ export const ChapterTitleForm = ({
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
-                Chapter Title
+                Chapter Description
                 <Button onClick={toggleEditing} variant="ghost">
                     {isEditing && (
                         <>Cancel</>
@@ -90,15 +90,18 @@ export const ChapterTitleForm = ({
                     {!isEditing && (
                         <>
                         <Pencil className="h-4 w-4 mr-2"/>
-                        Edit Title    
+                        Edit Description    
                         </>
                     )}
                     
                 </Button>
             </div>
             {!isEditing && (
-                <p className="text-sm mt-2">
-                    {initialData.title}
+                <p className={cn(
+                    "text-sm mt-2",
+                    !initialData.description && "text-slate-500 italic"
+                )}>
+                    {initialData.description || "No Description"}
                 </p>
             )}
             {isEditing && (
@@ -109,16 +112,13 @@ export const ChapterTitleForm = ({
                     >
                         <FormField 
                             control={form.control}
-                            name="title"
+                            name="description"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        {/* <Editor 
-                                             {...field}
-                                        /> */}
-                                        <Input 
+                                        <Textarea 
                                             disabled={isSubmitting}
-                                            placeholder="e.g 'Introduction to the course'"
+                                            placeholder="e.g 'This course is meant for beginners'"
                                             {...field}
                                         />
                                     </FormControl>
