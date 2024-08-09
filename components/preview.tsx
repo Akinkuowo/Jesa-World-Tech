@@ -15,7 +15,7 @@ export const Preview = ({
     const ReactQuill = useMemo(() => dynamic(() => import("react-quill"), { ssr: false}), [])
 
     return (
-        <div className="bg-white">
+        <div className="bg-slate-100">
             <ReactQuill 
                 theme="bubble"
                 value={value}

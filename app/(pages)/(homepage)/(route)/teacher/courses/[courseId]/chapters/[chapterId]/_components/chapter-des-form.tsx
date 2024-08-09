@@ -21,6 +21,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Chapter } from "@prisma/client";
+import { Editor } from "@/components/editor";
+import { Preview } from "@/components/preview";
 
 interface ChapterDesFormProps {
     initialData: Chapter;
@@ -97,12 +99,17 @@ export const ChapterDesForm = ({
                 </Button>
             </div>
             {!isEditing && (
-                <p className={cn(
+                <div className={cn(
                     "text-sm mt-2",
                     !initialData.description && "text-slate-500 italic"
                 )}>
-                    {initialData.description || "No Description"}
-                </p>
+                    {!initialData.description && "No Description"}
+                    {initialData.description && (
+                        <Preview 
+                            value={initialData.description}
+                        />
+                    )}
+                </div>
             )}
             {isEditing && (
                 <Form {...form}>
@@ -116,9 +123,12 @@ export const ChapterDesForm = ({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Textarea 
+                                        {/* <Textarea 
                                             disabled={isSubmitting}
                                             placeholder="e.g 'This course is meant for beginners'"
+                                            {...field}
+                                        /> */}
+                                        <Editor 
                                             {...field}
                                         />
                                     </FormControl>
