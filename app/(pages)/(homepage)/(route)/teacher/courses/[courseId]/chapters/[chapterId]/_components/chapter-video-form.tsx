@@ -2,6 +2,8 @@
 
 import * as z from "zod";
 import axios from "axios";
+import { CldVideoPlayer } from 'next-cloudinary';
+import 'next-cloudinary/dist/cld-video-player.css';
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import{ Button } from "@/components/ui/button";
@@ -17,7 +19,7 @@ import { FileUpload } from "@/components/file-upload";
  })
 
 interface ChapterVideoFormProps {
-    initialData: Chapter & { MuxData?: MuxData | null}
+    initialData: Chapter 
     courseId: string;
     chapterId: string;
 }
@@ -31,6 +33,7 @@ export const ChapterVideoForm = ({
     const [ isEditing, setIsEditing ] = useState(false)
     const toggleEditing = () => setIsEditing((current) => !current)
     const router = useRouter();
+    const videoUrl = `${initialData.videoUrl}`
 
     const onSubmit = async (values: z.infer<typeof formFormat>) => {
         // console.log(values)
@@ -63,7 +66,7 @@ export const ChapterVideoForm = ({
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
-                Chapter Video
+                Chapter Video 
                 <Button onClick={toggleEditing} variant="ghost">
                     {isEditing && (
                         <>Cancel</>
@@ -90,7 +93,11 @@ export const ChapterVideoForm = ({
                     </div>
                 ) : (
                     <div className="relative aspect-video mt-2">
-                        Video uploaded!
+                       <CldVideoPlayer
+                            width="1920"
+                            height="1080"
+                            src={videoUrl}
+                        />
                     </div>
                 )
             )}
