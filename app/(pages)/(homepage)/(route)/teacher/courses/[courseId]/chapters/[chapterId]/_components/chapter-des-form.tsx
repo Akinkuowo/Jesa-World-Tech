@@ -19,7 +19,6 @@ import {
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { Chapter } from "@prisma/client";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
@@ -57,7 +56,7 @@ export const ChapterDesForm = ({
         // console.log(values)
         try{
             const response = await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
-            console.log(response)
+            // console.log(response)
             toast.success("Chapter Updated", {
                 style: {
                     borderRadius: '10px',
