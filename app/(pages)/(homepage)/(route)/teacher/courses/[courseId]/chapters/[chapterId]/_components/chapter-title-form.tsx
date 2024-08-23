@@ -113,9 +113,7 @@ export const ChapterTitleForm = ({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        {/* <Editor 
-                                             {...field}
-                                        /> */}
+                                        
                                         <Input 
                                             disabled={isSubmitting}
                                             placeholder="e.g 'Introduction to the course'"
