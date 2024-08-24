@@ -36,11 +36,7 @@ const Menu = [
         label: "Careers",
         href: "/careers"
     },
-    {
-        icon: User,
-        label: "Login",
-        href: "/sign-in"
-    },
+    
     
 ]
 
