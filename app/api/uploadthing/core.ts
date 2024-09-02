@@ -1,27 +1,59 @@
+// import { auth } from "@clerk/nextjs/server";
+// import { createUploadthing, type FileRouter } from "uploadthing/next";
+// import { UploadThingError } from "uploadthing/server";
+ 
+// const f = createUploadthing();
+ 
+// const handleAuth = () => { 
+//     const { userId } = auth();
+//     if (!userId) throw new Error("Unauthorized users");
+//     return { userId }
+// }; 
+ 
+// export const ourFileRouter = {
+  
+//   courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+//   .middleware(() => handleAuth())
+//   .onUploadComplete(() => {}),
+//   courseAttachment: f(["text", "image", "video", "audio", "pdf"])
+//   .middleware(() => handleAuth())
+//   .onUploadComplete(() => {}),
+//   chapterVideos: f({ video: { maxFileSize: "512GB", maxFileCount: 1 } })
+//   .middleware(() => handleAuth())
+//   .onUploadComplete(() => {}),
+// } satisfies FileRouter;
+ 
+// export type OurFileRouter = typeof ourFileRouter;
+
 import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
- 
+
 const f = createUploadthing();
- 
+
 const handleAuth = () => { 
     const { userId } = auth();
     if (!userId) throw new Error("Unauthorized users");
     return { userId }
-}; 
- 
+};
+
 export const ourFileRouter = {
-  
   courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-  
-  .middleware(() => handleAuth())
-  .onUploadComplete(() => {}),
+    .middleware(() => handleAuth())
+    .onUploadComplete(({ metadata }) => {
+      console.log(`Upload complete for user: ${metadata.userId}`);
+      // Add any other logic you want to execute after upload is complete
+    }),
   courseAttachment: f(["text", "image", "video", "audio", "pdf"])
-  .middleware(() => handleAuth())
-  .onUploadComplete(() => {}),
+    .middleware(() => handleAuth())
+    .onUploadComplete(({ metadata }) => {
+      console.log(`Upload complete for user: ${metadata.userId}`);
+    }),
   chapterVideos: f({ video: { maxFileSize: "512GB", maxFileCount: 1 } })
-  .middleware(() => handleAuth())
-  .onUploadComplete(() => {}),
+    .middleware(() => handleAuth())
+    .onUploadComplete(({ metadata }) => {
+      console.log(`Upload complete for user: ${metadata.userId}`);
+    }),
 } satisfies FileRouter;
- 
+
 export type OurFileRouter = typeof ourFileRouter;

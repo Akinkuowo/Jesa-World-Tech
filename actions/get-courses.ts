@@ -1,4 +1,4 @@
-import { Course, Category, Payment } from "@prisma/client";
+import { Course, Category, Level } from "@prisma/client";
 import { db } from "@/lib/db";
 import { GetProgress } from "./get-progress";
 
@@ -6,7 +6,7 @@ type CourseWithProgressWithCategory = Course & {
     category: Category | null;
     chapters: { id: string }[];
     progress: number | null;
-    subscription: Payment | null;
+    level: Level | null; // Include Level
 };
 
 type GetCourse = {
@@ -37,42 +37,34 @@ export const getCourse = async ({
                         id: true,
                     },
                 },
-                // Include related Payments (representing subscriptions) for the current user
-                Payment: {
+                payments: {
                     where: {
                         userId,
                     },
-                    include: {
-                        courseLevel: true,
-                    },
                 },
+                courseLevel: true, // Fetch Level details
             },
             orderBy: {
                 createdAt: "desc",
             },
         });
 
-        // console.log("Fetched courses:", courses); // Debug lo
-
-        const coursesWithProgress: CourseWithProgressWithCategory[] = await Promise.all(
+        const coursesWithProgress = await Promise.all(
             courses.map(async (course) => {
                 const progress = await GetProgress(course.id, userId);
-                const subscription = course.Payment.length > 0 ? course.Payment[0] : null;
-
                 return {
                     ...course,
                     progress,
-                    subscription,
+                    level: course.courseLevel, // Include Level
                 };
-                
-                
-                
             })
         );
-        console.log("Courses with progress:", coursesWithProgress);
+
+        // Debug log
+
         return coursesWithProgress;
     } catch (error) {
-        console.error("[getCourses]", error);
+        console.error("[getCourse error]", error);
         return [];
     }
 };

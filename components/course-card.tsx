@@ -9,7 +9,7 @@ interface CourseCardProps {
     category?: string;
     imageUrl?: string | null;
     chaptersLength: number;
-    enroll: String;
+    courseLevel?: string ;
     progress: number | null;
 }
 
@@ -20,7 +20,7 @@ export const CourseCard = ({
     imageUrl,
     chaptersLength,
     progress,
-    enroll
+    courseLevel
 }: CourseCardProps) => {
     return (
         <Link href={`/courses/${id}`} key={id} className="course-card">
@@ -42,7 +42,7 @@ export const CourseCard = ({
                         {title}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                        {category}
+                        {`${category} | ${courseLevel}`}
                     </p>
                     <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
                         <div className="flex items-center gap-x-1 text-slate-500">
@@ -62,11 +62,11 @@ export const CourseCard = ({
                         `${progress}%`
                     ) : (
                         <div>
-                            <Link href={`/`}>
-                                <button className="py-2 px-3 text-sm border border-slate-200 flex bg-sky-400 rounded items-center gap-x-1 hover:border-sky-700 transition">
+                            {/* <Link href={`/`}>
+                                <button className="py-2 px-3 text-sm border border-slate-200 fle bg-yellow-400 rounded items-center gap-x-1 hover:border-sky-700 transition">
                                     Enroll
                                 </button>
-                            </Link>
+                            </Link> */}
                         </div>
                     )}
                     {/* {progress != null ? (

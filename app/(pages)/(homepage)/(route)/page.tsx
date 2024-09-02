@@ -33,8 +33,7 @@ const Home = async ({
     userId,
     ...searchParams,
   });
-
-  console.log("Fetched courses:", courses); 
+  
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
