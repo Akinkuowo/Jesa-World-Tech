@@ -69,4 +69,4 @@ const CourseSideBar = async ({
     );
 };
 
-export default CourseSideBar;
+export default CourseSideBar

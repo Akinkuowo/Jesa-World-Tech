@@ -18,7 +18,7 @@ interface CoursesListProps {
 export const CoursesList = ({
     items
 }: CoursesListProps) => {
-    console.log(items); // Debug log
+    // Debug log
     if (!items || items.length === 0) {
         return (
             <div className="text-center text-sm text-muted-foreground mt-10">
