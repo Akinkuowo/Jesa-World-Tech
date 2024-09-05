@@ -42,7 +42,7 @@ model Course {
 
 model Payment {
   id            String @id @default(uuid())
-  userId        String
+  userId        String?
   courseLevelId String
   courseLevel   Level  @relation(fields: [courseLevelId], references: [id], onDelete: Cascade)
 
@@ -60,17 +60,19 @@ model Category {
 }
 
 model Subscription {
-  id            String @id @default(uuid())
-  userId        String @unique
+  id            String  @id @default(uuid())
+  userId        String?
   courseLevelId String
-  courseLevel   Level  @relation(fields: [courseLevelId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  courseLevel   Level   @relation(fields: [courseLevelId], references: [id])
+  
+  validUntil    DateTime // Expiration date of the subscription
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
 
   @@unique([userId, courseLevelId])
   @@index([userId])
 }
+
 
 model Level {
   id            String         @id @default(uuid())

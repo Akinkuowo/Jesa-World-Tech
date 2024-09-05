@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { CourseSideBarItems } from "./course-sidebar-items";
+import { Button } from "@/components/ui/button";
 
 interface CourseSideBarProps {
     course: Course & {
@@ -26,6 +27,7 @@ const CourseSideBar = async ({
     }
 
     // Check if the user is subscribed to the course level
+    const freeCourseId = "6610dd85-28fb-4def-9f1e-5bd672ede079";
     let subscription = null;
     try {
         subscription = await db.subscription.findUnique({
@@ -59,10 +61,14 @@ const CourseSideBar = async ({
                 ))}
             </div>
             <div className="p-4">
-                {subscription ? (
-                    <p>Subscribed to this course level.</p>
+                {subscription || course.levelId === freeCourseId ? (
+                    <Button className="w-full md:w-auto bg-yellow-400" size="sm">
+                        Enroll Course
+                    </Button>
                 ) : (
-                    <p>not subscribed</p>
+                    <Button className="w-full md:w-auto bg-yellow-400" size="sm">
+                        subscribe to have access
+                    </Button>
                 )}
             </div>
         </div>

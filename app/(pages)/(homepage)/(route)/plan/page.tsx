@@ -1,7 +1,10 @@
+import { PlansTable } from "../_components/plans-table";
+
+
 const PlanPage = () => {
     return ( 
         <div className="">
-            <h1>Plan Page</h1>
+            <PlansTable />
         </div>
      );
 }
