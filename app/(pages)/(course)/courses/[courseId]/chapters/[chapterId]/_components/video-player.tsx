@@ -26,6 +26,7 @@ export const VideoPlayer = ({
     isLocked,
     completeOnEnd
 }: VideoPlayerProps) => {
+     
     
     const [ isReady, setIsReady ] = useState(true)
     return (

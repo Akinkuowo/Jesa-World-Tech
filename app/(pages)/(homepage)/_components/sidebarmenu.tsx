@@ -18,7 +18,7 @@ const Menu = [
     },
     {
         icon: BookOpen,
-        label: "Courses",
+        label: "My Courses",
         href: "/courses"
     },
     {
@@ -40,40 +40,6 @@ const Menu = [
     
 ]
 
-const LoginMenu = [
-    {
-        icon: Home,
-        label: "Home",
-        href: "/"
-    },
-    {
-        icon: Radio,
-        label: "Live Class",
-        href: "/live-class"
-    },
-    {
-        icon: BookOpen,
-        label: "Courses",
-        href: "/courses"
-    },
-    {
-        icon: GanttChartSquare,
-        label: "Plan",
-        href: "/plan"
-    },
-    {
-        icon: Newspaper,
-        label: "News",
-        href: "/news"
-    },
-    {
-        icon: BriefcaseBusiness,
-        label: "Careers",
-        href: "/careers"
-    },
-    
-    
-] 
 
 const teacherMenu = [
     {

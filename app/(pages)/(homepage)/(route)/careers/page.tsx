@@ -1,7 +1,9 @@
+import ComingSoon from "../_components/coming-soon";
+
 const CareerPage = () => {
     return ( 
         <div className="">
-            <h1>Career page</h1>
+            <ComingSoon />
         </div>
      );
 }

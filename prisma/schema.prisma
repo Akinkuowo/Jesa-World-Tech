@@ -38,6 +38,7 @@ model Course {
 
   @@index([categoryId])
   @@index([levelId])
+  Enroll Enroll[] @relation("CourseToPayment")
 }
 
 model Payment {
@@ -52,6 +53,22 @@ model Payment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Enroll {
+  id            String @id @default(uuid())
+  userId        String
+  courseLevelId String
+  courseLevel   Level  @relation(fields: [courseLevelId], references: [id], onDelete: Cascade)
+  
+  courseId      String
+  course        Course @relation("CourseToPayment", fields: [courseId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, courseId]) // Ensure unique combination of userId and courseId
+}
+
 
 model Category {
   id      String   @id @default(uuid())
@@ -83,6 +100,7 @@ model Level {
 
   @@index([name])
   @@index([id])
+  Enroll Enroll[]
 }
 
 model Attachment {

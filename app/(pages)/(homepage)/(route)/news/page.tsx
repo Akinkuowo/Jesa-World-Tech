@@ -1,7 +1,9 @@
+import ComingSoon from "../_components/coming-soon";
+
 const NewsPage = () => {
     return ( 
         <div className="">
-            <h1>News page</h1>
+            <ComingSoon />
         </div>
      );
 }

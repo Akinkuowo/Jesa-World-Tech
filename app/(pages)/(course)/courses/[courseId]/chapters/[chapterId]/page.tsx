@@ -14,7 +14,7 @@ import { File } from "lucide-react";
 const ChapterIdPage = async ({
     params
 }: { 
-    params: { courseId: string; chapterId: string }
+    params: { courseId: string; chapterId: string; }
 }) => {
     const { userId } = auth() || {};
 
@@ -30,6 +30,14 @@ const ChapterIdPage = async ({
     if (!course) {
         return redirect("/404"); // Handle the case where the course is not found
     }
+
+    // Fetch the enrollment record for the course and user
+    const enroll = await db.enroll.findFirst({
+        where: {
+            courseId: params.courseId,
+            userId: userId, // Ensure we query based on user and course
+        }
+    });
 
     const {
         chapter,
@@ -47,8 +55,17 @@ const ChapterIdPage = async ({
     });
 
     const freeCourseId = "6610dd85-28fb-4def-9f1e-5bd672ede079";
-    const isLocked = !chapter?.isFree && !subscription || course.levelId !== freeCourseId;
+
+    // Check if the chapter is locked based on the subscription and the chapter's free status
+    const isLocked = subscription?.courseLevelId !== course.levelId  && !subscription && course.levelId !== freeCourseId;
+    const needToEnroll = subscription?.courseLevelId === course.levelId || course.levelId === freeCourseId && !chapter?.isFree 
     const completeOnEnd = !!subscription && !userProgress?.isCompleted;
+
+    console.log(!subscription)
+    console.log(subscription?.courseLevelId !== course.levelId)
+    console.log(course.levelId !== freeCourseId)
+    console.log(isLocked)
+
 
     return (
         <div>
@@ -58,17 +75,18 @@ const ChapterIdPage = async ({
                     variant="success"
                 />
             )}
-            {course.levelId === freeCourseId ? (
+            {!isLocked && (
                 <Banner 
                     label="This course is fully accessible"
                     variant="success"
                 />
-            ) : (isLocked && (
+            )}
+            {isLocked && (
                 <Banner 
                     label="This chapter is locked. Please subscribe to access it."
                     variant="warning"
                 />
-            ))}
+            )}
             <div className="flex flex-col max-w-4xl mx-auto pb-20">
                 <div className="p4">
                     <VideoPlayer 
@@ -79,7 +97,6 @@ const ChapterIdPage = async ({
                         isLocked={isLocked}
                         completeOnEnd={completeOnEnd}
                         videoUrl={chapter?.videoUrl!}
-
                     />
                 </div>
             </div>
@@ -88,13 +105,14 @@ const ChapterIdPage = async ({
                     <h2 className="text-2xl font-semibold mb-2">
                         {chapter?.title}
                     </h2>
-                    {subscription || course.levelId === freeCourseId ? (
-                        <div>
-                            <CourseEnrollButton 
-                                courseId={course.id}
-                            />
-                        </div>
-                    ):(
+                    {!isLocked ? (
+                        <CourseEnrollButton 
+                            courseId={course.id}
+                            chapterId={chapter?.id}
+                            isLocked={isLocked}
+                            enroll={enroll} // Pass the enroll object here
+                        />
+                    ) : (
                         <CourseSubscriptionButton />
                     )}
                 </div>
@@ -125,6 +143,6 @@ const ChapterIdPage = async ({
             </div>
         </div>
     );
-}
+};
 
 export default ChapterIdPage;

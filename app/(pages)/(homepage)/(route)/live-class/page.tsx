@@ -1,7 +1,9 @@
+import ComingSoon from "../_components/coming-soon";
+
 const LiveClass = () => {
     return ( 
         <div className="">
-            <h1>search </h1>
+            <ComingSoon />
         </div>
      );
 }

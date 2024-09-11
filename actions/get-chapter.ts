@@ -6,6 +6,7 @@ interface GetChapterProps {
     courseId: string;
     chapterId: string;
     course: Course;
+    
 }
 
 export const GetChapter = async ({
@@ -15,7 +16,6 @@ export const GetChapter = async ({
     course
 }: GetChapterProps) => {
     try {
-        console.log(`Fetching chapter: ${chapterId} for course: ${courseId}`);
         // Check if the course levelId is valid before querying
         if (!course.levelId) {
             console.log("Invalid course levelId.");
