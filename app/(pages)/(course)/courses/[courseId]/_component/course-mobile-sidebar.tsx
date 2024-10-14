@@ -10,7 +10,7 @@ interface CourseMobileSidebarProps {
         })[];
     },
     progressCount: number
-    Enroll: Enroll 
+    Enroll?: Enroll 
 }
 
 export const CourseMobileSidebar = ({

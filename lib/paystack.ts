@@ -2,9 +2,10 @@
 import axios from 'axios';
 import { db } from './db';
 import { auth } from '@clerk/nextjs/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { reference, levelId } = req.body;
     const { userId } = auth();  // Clerk authentication to get user ID
 
