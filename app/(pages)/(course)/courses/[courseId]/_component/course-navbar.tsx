@@ -1,7 +1,7 @@
 
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { Chapter, Course, UserProgress } from "@prisma/client";
+import { Chapter, Course, Enroll, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { CourseSideBarItems } from "./course-sidebar-items";
 import { NavbarRoutes } from "@/components/navbarRoutes";
@@ -14,11 +14,13 @@ interface CourseNavBarProps {
         })[];
     };
     progressCount: number;
+    Enroll: Enroll
 }
 
 const CourseNavBar = async ({
     course,
-    progressCount
+    progressCount,
+    Enroll
 }: CourseNavBarProps) => {
     const { userId } = auth();
 
@@ -47,7 +49,7 @@ const CourseNavBar = async ({
                 <CourseMobileSidebar
                     course={course}
                     progressCount={progressCount} 
-                
+                    Enroll={Enroll}                
                 />
                 <NavbarRoutes />
             </div>
