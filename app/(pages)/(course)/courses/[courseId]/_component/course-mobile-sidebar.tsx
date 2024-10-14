@@ -27,7 +27,14 @@ export const CourseMobileSidebar = ({
             <CourseSideBar 
                     course={course}
                     progressCount={progressCount} 
-                    enroll={Enroll}            />
+                    enroll={Enroll ?? {
+                        id: '',
+                        userId: '',
+                        courseLevelId: '',
+                        courseId: '',
+                        createdAt: new Date(),
+                        updatedAt: new Date()
+                      }}           />
         </SheetContent>
     </Sheet>
     )
