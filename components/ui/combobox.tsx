@@ -71,7 +71,7 @@ export const Combobox = ({
           <CommandEmpty>No option found.</CommandEmpty>
           <CommandGroup>
             {options.map((option) => (
-              <CommandList>
+              <CommandList key={option.label}>
                   <CommandItem
                   key={option.value}
                   value={option.value}
