@@ -7,13 +7,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { IconBadge } from "@/components/icon-badge"; // Make sure this path is correct
 import { BookOpen } from "lucide-react";
-import { Level } from "@prisma/client";
 
-interface CoursesProps {
-  level: Level | null;
-}
 
-const Courses = async ({ level }: CoursesProps) => {
+
+const Courses = async () => {
   const { userId } = auth();
 
   if (!userId) {
