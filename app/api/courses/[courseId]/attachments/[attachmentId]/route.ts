@@ -9,8 +9,8 @@ export async function DELETE(
     console.log("Received request to delete attachment:", params);
 
     try {
-        const { userId } = auth();
-        const { url } = await req.json();
+        const authData = auth();
+        const userId = authData?.userId;
 
         if (!userId) {
             console.error("Unauthorized access attempt");
@@ -22,6 +22,7 @@ export async function DELETE(
             return new NextResponse("Invalid parameters", { status: 400 });
         }
 
+        // Ensure course ownership
         const courseOwner = await db.course.findUnique({
             where: {
                 id: params.courseId,
@@ -34,6 +35,7 @@ export async function DELETE(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        // Check if the attachment exists
         const existingAttachment = await db.attachment.findUnique({
             where: {
                 id: params.attachmentId,
@@ -49,10 +51,11 @@ export async function DELETE(
             return new NextResponse("Attachment not found", { status: 404 });
         }
 
+        // Delete the attachment
         const attachment = await db.attachment.delete({
             where: {
-                courseId: params.courseId,
                 id: params.attachmentId,
+                courseId: params.courseId,
             },
         });
 
