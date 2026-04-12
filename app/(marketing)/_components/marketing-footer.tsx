@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Zap, Mail, Phone, MapPin,
   Twitter, Linkedin, Github, Youtube,
@@ -16,14 +17,16 @@ const footerLinks = {
   ],
   Company: [
     { label: "About Us", href: "/about" },
+    { label: "Our Team", href: "/team" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ],
   Platform: [
-    { label: "Sign In", href: "/sign-in" },
-    { label: "Get Started", href: "/sign-up" },
+    { label: "Sign In", href: "/login" },
+    { label: "Get Started", href: "/register" },
     { label: "Dashboard", href: "/dashboard" },
+    { label: "Latest News (Blog)", href: "/blog" },
   ],
 };
 
@@ -68,13 +71,15 @@ export default function MarketingFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-electric-blue-500 to-cyan-accent-500 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white" />
+            <Link href="/" className="flex items-center group cursor-pointer transition-opacity hover:opacity-90">
+              <div className="relative w-48 h-14">
+                <Image
+                  src="/logo.png"
+                  alt="JESA World Technology Logo"
+                  fill
+                  className="object-contain brightness-0 invert"
+                />
               </div>
-              <span className="font-display font-bold text-xl text-white">
-                JESA <span className="gradient-text">World</span>
-              </span>
             </Link>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               A leading I.T. firm delivering innovative technology solutions — from cloud infrastructure to custom software — empowering businesses across Africa and beyond.

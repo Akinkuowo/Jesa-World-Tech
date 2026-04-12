@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { newPassword } from "@/actions/auth";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export default function NewPasswordPage() {
   const searchParams = useSearchParams();
@@ -51,18 +52,14 @@ export default function NewPasswordPage() {
             >
               New Password
             </label>
-            <input
+            <PasswordInput
               id="password"
               name="password"
-              type="password"
               disabled={isPending}
               required
               placeholder="********"
               className="w-full p-2.5 border rounded-lg border-slate-200 focus:outline-none focus:ring-2 focus:ring-electric-blue-500/50 focus:border-electric-blue-500 transition-all disabled:opacity-50"
             />
-            <p className="text-xs text-slate-500 mt-1">
-              Must be at least 8 characters and contain letters and numbers.
-            </p>
           </div>
 
           {error && (

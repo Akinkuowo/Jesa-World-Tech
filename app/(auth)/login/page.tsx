@@ -4,6 +4,7 @@ import { useState } from "react";
 import { login } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -53,12 +54,12 @@ export default function LoginPage() {
           <div className="flex items-center justify-between">
             <Label htmlFor="password" className="text-white/60 text-xs uppercase tracking-wider">Password</Label>
           </div>
-          <Input 
+          <PasswordInput 
             id="password" 
             name="password" 
-            type="password" 
             placeholder="••••••••" 
             required 
+            showChecklist={false}
             className="bg-navy-800/50 border-white/10 text-white placeholder:text-white/20 focus:border-electric-blue-500/50 transition-all"
           />
         </div>

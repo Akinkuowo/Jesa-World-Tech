@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Zap } from "lucide-react";
+import { db } from "@/lib/db";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Portfolio | JESA World Technology",
   description: "Explore JESA World Technology's project portfolio — case studies across cloud, cybersecurity, software development, and more.",
 };
 
-const projects = [
-  { title: "FinTech Payment Gateway", client: "PayFlow Africa", category: "Software Development", tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"], description: "End-to-end payment processing platform with real-time fraud detection, multi-currency support, and instant settlement across 15 African countries.", gradient: "from-purple-600 to-blue-600", outcome: "340% increase in transaction volume in 6 months" },
-  { title: "Government Data Portal", client: "Ministry of Digital Economy", category: "Data Analytics", tech: ["Python", "Django", "Elasticsearch", "Docker", "Azure"], description: "Secure, scalable open-data platform serving millions of citizen requests with advanced analytics and real-time dashboards.", gradient: "from-electric-blue-600 to-cyan-accent-600", outcome: "Won international award for digital transparency" },
-  { title: "Cloud Migration & SOC", client: "Apex Insurance Group", category: "Cloud & Cybersecurity", tech: ["AWS", "Terraform", "Splunk", "Python", "Ansible"], description: "Complete AWS cloud migration of legacy on-premises infrastructure plus 24/7 Security Operations Center setup.", gradient: "from-emerald-600 to-teal-600", outcome: "60% infrastructure cost reduction, zero downtime" },
-  { title: "Hospital Management System", client: "MedCare Health Network", category: "Software Development", tech: ["React", "Java Spring", "MySQL", "Docker", "Nginx"], description: "Integrated EHR, appointment scheduling, billing, and lab management system deployed across 12 hospital locations.", gradient: "from-pink-600 to-rose-600", outcome: "Reduced patient wait time by 45%" },
-  { title: "Smart Campus Network", client: "Tech University", category: "Network Infrastructure", tech: ["Cisco", "Fortinet", "SD-WAN", "Meraki", "RADIUS"], description: "Complete network infrastructure overhaul — SD-WAN, gigabit fiber, managed WiFi 6 across 40 buildings.", gradient: "from-orange-600 to-amber-600", outcome: "10x network performance improvement" },
-  { title: "E-Commerce Platform", client: "RetailMax Nigeria", category: "IT Consulting & Dev", tech: ["Next.js", "Shopify", "SAP", "Stripe", "Vercel"], description: "Full digital transformation — custom e-commerce platform, ERP integration, warehouse automation, and CRM.", gradient: "from-violet-600 to-indigo-600", outcome: "340% revenue growth post-launch" },
-  { title: "Microfinance Core Banking", client: "Zenith Credit Union", category: "Software Development", tech: ["Java", "Oracle DB", "Spring Boot", "Angular", "RabbitMQ"], description: "Custom core banking system with loan management, mobile banking, and real-time reporting for 200,000+ members.", gradient: "from-teal-600 to-cyan-600", outcome: "Served 200K+ members with 99.98% uptime" },
-  { title: "Logistics Tracking Platform", client: "SwiftMove Logistics", category: "Software Development", tech: ["React Native", "Node.js", "MongoDB", "Google Maps", "Firebase"], description: "Real-time fleet tracking, route optimization, and delivery management platform for 5,000+ daily shipments.", gradient: "from-lime-600 to-green-600", outcome: "30% reduction in delivery times" },
-  { title: "SOC-as-a-Service", client: "Multiple Clients", category: "Cybersecurity", tech: ["Splunk", "CrowdStrike", "Palo Alto", "Python", "Azure Sentinel"], description: "Managed Security Operations Center providing 24/7 threat monitoring and response for 30+ organizations.", gradient: "from-rose-600 to-red-600", outcome: "Zero successful breaches across client base" },
-];
-
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const projects = await db.project.findMany({
+    where: {
+      isPublished: true,
+    },
+    orderBy: {
+      order: "asc",
+    },
+  });
   return (
     <div className="min-h-screen bg-navy-950 pt-20">
       {/* Hero */}
@@ -42,7 +40,20 @@ export default function PortfolioPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <div key={project.title} className="group glass-card rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 hover:shadow-xl transition-all duration-300 service-card flex flex-col">
-              <div className={`h-1.5 w-full bg-gradient-to-r ${project.gradient}`} />
+              <div className="relative aspect-video w-full overflow-hidden">
+                {project.imageUrl ? (
+                  <Image 
+                    src={project.imageUrl} 
+                    alt={project.title} 
+                    fill 
+                    className="object-cover transition-transform duration-500 group-hover:scale-110" 
+                  />
+                ) : (
+                  <div className={`w-full h-full bg-gradient-to-br ${project.isFeatured ? 'from-purple-600 to-blue-600' : 'from-slate-700 to-slate-900'} flex items-center justify-center opacity-40`}>
+                    <Zap className="w-12 h-12 text-white/20" />
+                  </div>
+                )}
+              </div>
               <div className="p-6 flex flex-col flex-1">
                 <span className="inline-block text-xs font-medium px-2.5 py-1 rounded-full bg-white/5 text-white/60 border border-white/10 mb-4">
                   {project.category}
@@ -56,8 +67,8 @@ export default function PortfolioPage() {
                 </div>
                 {/* Tech Tags */}
                 <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span key={t} className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/40 border border-white/5">{t}</span>
+                  {project.techStack.split(",").map((t) => (
+                    <span key={t.trim()} className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/40 border border-white/5">{t.trim()}</span>
                   ))}
                 </div>
                 <div className="mt-4 flex items-center gap-1 text-electric-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">

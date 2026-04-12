@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X, Zap, LogOut } from "lucide-react";
 import { useAuth } from "@/components/providers/auth-provider";
+import { logout } from "@/actions/auth";
 
 const navLinks = [
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
   { label: "Portfolio", href: "/portfolio" },
+  { label: "Team", href: "/team" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
@@ -40,14 +44,15 @@ export default function MarketingNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-electric-blue-600 to-cyan-accent-500 flex items-center justify-center animate-pulse-glow">
-              <Zap className="w-5 h-5 text-white" />
+          <Link href="/" className="flex items-center group cursor-pointer transition-opacity hover:opacity-90">
+            <div className="relative w-48 h-14">
+              <Image
+                src="/logo.png"
+                alt="JESA World Technology Logo"
+                fill
+                className="object-contain brightness-0 invert"
+              />
             </div>
-            <span className="font-display font-bold text-lg leading-tight">
-              <span className="text-white">JESA</span>
-              <span className="gradient-text"> World</span>
-            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -70,12 +75,21 @@ export default function MarketingNavbar() {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             {isSignedIn ? (
-              <Link
-                href="/dashboard"
-                className="px-5 py-2 rounded-lg bg-gradient-to-r from-electric-blue-600 to-cyan-accent-600 text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  href="/dashboard"
+                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-electric-blue-600 to-cyan-accent-600 text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => logout()}
+                  className="px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 text-sm font-medium"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Log out
+                </button>
+              </>
             ) : (
               <>
                 <Link
@@ -125,13 +139,25 @@ export default function MarketingNavbar() {
             ))}
             <div className="pt-3 border-t border-white/5 flex flex-col gap-2">
               {isSignedIn ? (
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-3 rounded-lg bg-gradient-to-r from-electric-blue-600 to-cyan-accent-600 text-white text-sm font-semibold text-center"
-                >
-                  Dashboard
-                </Link>
+                <>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-4 py-3 rounded-lg bg-gradient-to-r from-electric-blue-600 to-cyan-accent-600 text-white text-sm font-semibold text-center"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setMobileOpen(false);
+                      logout();
+                    }}
+                    className="flex w-full items-center justify-center gap-2 px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/5 text-sm font-medium text-center"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Log out
+                  </button>
+                </>
               ) : (
                 <>
                   <Link

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signup } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
@@ -67,29 +68,13 @@ export default function RegisterPage() {
 
         <div className="space-y-2">
           <Label htmlFor="password" className="text-white/60 text-xs uppercase tracking-wider">Password</Label>
-          <Input 
+          <PasswordInput 
             id="password" 
             name="password" 
-            type="password" 
             placeholder="••••••••" 
             required 
             className={`bg-navy-800/50 border-white/10 text-white placeholder:text-white/20 focus:border-electric-blue-500/50 transition-all ${errors.password ? "border-red-500/50" : ""}`}
           />
-          
-          {/* Password requirements checklist */}
-          <div className="grid grid-cols-1 gap-1.5 mt-3">
-            {[
-              { label: "At least 8 characters", met: true }, // Logic simplified for UI
-              { label: "At least one letter", met: true },
-              { label: "At least one number", met: true },
-              { label: "Special character", met: true }
-            ].map((req, i) => (
-              <div key={i} className="flex items-center gap-2 text-[10px] text-white/30">
-                <CheckCircle2 className="w-3 h-3 text-white/10" />
-                {req.label}
-              </div>
-            ))}
-          </div>
           {errors.password && <p className="text-red-400 text-[10px] mt-2 leading-relaxed">{errors.password.join(" ")}</p>}
         </div>
 

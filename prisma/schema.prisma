@@ -249,6 +249,7 @@ model Project {
   imageUrl    String?
   clientName  String?
   techStack   String  // comma-separated list e.g. "Next.js, PostgreSQL, AWS"
+  outcome     String?
   projectUrl  String?
   isFeatured  Boolean @default(false)
   isPublished Boolean @default(true)
@@ -292,4 +293,41 @@ model ContactInquiry {
 
   @@index([isRead])
   @@index([email])
+}
+
+model BlogPost {
+  id          String  @id @default(uuid())
+  title       String
+  slug        String  @unique
+  content     String  @db.Text
+  excerpt     String? @db.Text
+  imageUrl    String?
+  category    String?
+  authorName  String?
+  readTime    String?
+  isPublished Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+}
+
+model TeamMember {
+  id          String  @id @default(uuid())
+  name        String
+  role        String
+  bio         String? @db.Text
+  imageUrl    String?
+  initials    String?
+  gradient    String? // e.g. "from-blue-500 to-cyan-500"
+  linkedinUrl String?
+  twitterUrl  String?
+  order       Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
 }
