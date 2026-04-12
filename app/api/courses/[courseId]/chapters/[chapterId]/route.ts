@@ -15,8 +15,9 @@ const { video } = mux;
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { courseId: string; chapterId: string } }
+    props: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
+    const params = await props.params;
     try {
         const session = await getSession();
         const userId = session?.userId as string;
@@ -96,8 +97,9 @@ export async function DELETE(
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: string; chapterId: string } }
+    props: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
+    const params = await props.params;
     try {
         const session = await getSession();
         const userId = session?.userId as string;

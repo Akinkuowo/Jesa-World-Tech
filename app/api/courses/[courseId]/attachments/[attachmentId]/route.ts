@@ -4,8 +4,9 @@ import { db } from "@/lib/db";
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { courseId: string; attachmentId: string } }
+    props: { params: Promise<{ courseId: string; attachmentId: string }> }
 ) {
+    const params = await props.params;
     console.log("Received request to delete attachment:", params);
 
     try {

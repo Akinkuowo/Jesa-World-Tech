@@ -59,10 +59,10 @@ export default async function PortfolioPage() {
                   {project.category}
                 </span>
                 <h3 className="font-display text-lg font-bold text-white mb-1 group-hover:text-electric-blue-300 transition-colors">{project.title}</h3>
-                <p className="text-white/40 text-xs mb-3">Client: {project.client}</p>
+                <p className="text-white/40 text-xs mb-3">Client: {project.clientName}</p>
                 <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">{project.description}</p>
                 {/* Outcome */}
-                <div className={`px-3 py-2 rounded-lg bg-gradient-to-r ${project.gradient} bg-opacity-10 border border-white/5 mb-4`}>
+                <div className="px-3 py-2 rounded-lg bg-white/5 border border-white/5 mb-4">
                   <p className="text-white/70 text-xs"><span className="text-white font-medium">Outcome: </span>{project.outcome}</p>
                 </div>
                 {/* Tech Tags */}

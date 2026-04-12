@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/session";
 import { Chapter, Course, Enroll, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
 import { CourseSideBarItems } from "./course-sidebar-items";
 import { CourseProgress } from "./course-progress";
 

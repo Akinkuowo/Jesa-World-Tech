@@ -5,13 +5,18 @@ import { redirect } from "next/navigation";
 import CourseSideBar from "./_component/course-sidebar";
 import CourseNavBar from "./_component/course-navbar";
 
-const CourseLayout = async ({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { courseId: string };
-}) => {
+const CourseLayout = async (
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ courseId: string }>;
+  }
+) => {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const session = await getSession();
   const userId = session?.userId as string;
 
@@ -48,12 +53,12 @@ const CourseLayout = async ({
   }
 
   // Fetch enrollment details for the user in the course
-  const enroll = await db.enroll.findFirst({
+  const enroll = (await db.enroll.findFirst({
     where: {
         userId,
         courseId: course.id,
       },
-    }) || {
+    })) || {
       id: '',
       userId: '',
       courseLevelId: '',

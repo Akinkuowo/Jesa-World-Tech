@@ -86,6 +86,47 @@ export async function signup(formData: FormData) {
   return { success: "Confirmation email sent." };
 }
 
+export async function signupAdmin(formData: FormData) {
+  const result = SignupSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return { errors: result.error.flatten().fieldErrors };
+  }
+
+  const { name, email, password } = result.data;
+
+  const existingUser = await db.user.findUnique({
+    where: { email },
+  });
+
+  if (existingUser) {
+    return {
+      errors: {
+        email: ["Email already in use."],
+      },
+    };
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Create admin user with instant verification for convenience
+  const user = await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role: "ADMIN",
+      emailVerified: new Date(),
+    },
+  });
+
+  await createSession(user.id, user.role);
+
+  revalidatePath("/");
+  redirect("/dashboard/admin");
+}
+
+
 export async function login(formData: FormData) {
   const result = LoginSchema.safeParse(Object.fromEntries(formData));
 
@@ -127,6 +168,11 @@ export async function login(formData: FormData) {
   await createSession(user.id, user.role);
 
   revalidatePath("/");
+  
+  if (user.role === "ADMIN") {
+    redirect("/dashboard/admin");
+  }
+
   redirect("/dashboard");
 }
 

@@ -34,7 +34,7 @@ export default async function BlogPage() {
             Latest Tech <span className="gradient-text">Frontiers</span>
           </h1>
           <p className="text-white/60 text-xl max-w-2xl mx-auto leading-relaxed">
-            Exploring the intersect of innovation, strategy, and engineering to power Africa's digital future.
+            Dive into the latest insights from our team of technologists and industry experts. We&apos;re sharing our journey and learnings.
           </p>
         </div>
       </div>

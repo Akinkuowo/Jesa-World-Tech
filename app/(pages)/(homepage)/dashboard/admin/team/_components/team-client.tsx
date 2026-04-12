@@ -4,8 +4,8 @@ import { useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { TeamMember } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "../../teacher/courses/_components/data-table";
-import { getColumns } from "./_components/columns";
+
+import { getColumns } from "./columns";
 import {
   Dialog,
   DialogContent,
@@ -13,10 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { TeamForm } from "./_components/team-form";
+import { TeamForm } from "./team-form";
 import { deleteTeamMember } from "@/actions/marketing";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { DataTable } from "../../../teacher/courses/_components/data-table";
 
 interface TeamClientProps {
   initialData: TeamMember[];

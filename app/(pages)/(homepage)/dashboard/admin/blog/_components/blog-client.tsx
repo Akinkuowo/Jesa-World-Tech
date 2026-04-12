@@ -4,8 +4,8 @@ import { useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { BlogPost } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "../../teacher/courses/_components/data-table";
-import { getColumns } from "./_components/columns";
+import { DataTable } from "../../../teacher/courses/_components/data-table";
+import { getColumns } from "./columns";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BlogForm } from "./_components/blog-form";
+import { BlogForm } from "./blog-form";
 import { deleteBlogPost } from "@/actions/marketing";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";

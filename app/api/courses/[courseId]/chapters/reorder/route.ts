@@ -3,10 +3,8 @@ import { getSession } from "@/lib/session";
 import { NextResponse } from "next/server";
 
 
-export async function PUT(
-    req: Request,
-    {params}: {params: {courseId: string}}
-){
+export async function PUT(req: Request, props: {params: Promise<{courseId: string}>}) {
+    const params = await props.params;
     try{
         const session = await getSession();
         const userId = session?.userId as string;

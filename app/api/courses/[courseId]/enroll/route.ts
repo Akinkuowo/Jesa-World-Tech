@@ -2,10 +2,8 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { NextResponse } from "next/server";
 
-export async function POST(
-    req: Request,
-    { params }: { params: { courseId: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ courseId: string }> }) {
+    const params = await props.params;
     try {
         // Authenticate the user
         const session = await getSession();

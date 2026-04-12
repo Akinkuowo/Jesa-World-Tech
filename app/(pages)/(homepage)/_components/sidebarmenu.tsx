@@ -1,3 +1,5 @@
+"use client";
+
 import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User, ShieldCheck, PenTool, Users2, Rocket } from "lucide-react"
 import { Sidebaritem } from "./sidebaritem";
 import { usePathname } from "next/navigation";

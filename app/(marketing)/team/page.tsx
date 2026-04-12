@@ -31,7 +31,7 @@ export default async function TeamPage() {
             The Minds Behind the <span className="gradient-text">Magic</span>
           </h1>
           <p className="text-white/60 text-xl max-w-2xl mx-auto leading-relaxed">
-            We are a collective of passionate technologists, strategists, and creators dedicated to pushing the boundaries of what's possible in the digital age.
+            We are a collective of passionate technologists, strategists, and creators dedicated to pushing the boundaries of what&apos;s possible in the digital age.
           </p>
         </div>
       </div>

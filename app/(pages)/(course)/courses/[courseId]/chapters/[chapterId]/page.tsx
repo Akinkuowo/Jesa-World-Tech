@@ -11,11 +11,12 @@ import { Preview } from "@/components/preview";
 import Link from "next/link";
 import { File } from "lucide-react";
 
-const ChapterIdPage = async ({
-    params
-}: { 
-    params: { courseId: string; chapterId: string; }
-}) => {
+const ChapterIdPage = async (
+    props: { 
+        params: Promise<{ courseId: string; chapterId: string; }>
+    }
+) => {
+    const params = await props.params;
     const session = await getSession();
     const userId = session?.userId as string;
 
@@ -59,7 +60,7 @@ const ChapterIdPage = async ({
 
     // Check if the chapter is locked based on the subscription and the chapter's free status
     const isLocked = subscription?.courseLevelId !== course.levelId  && !subscription && course.levelId !== freeCourseId;
-    const needToEnroll = subscription?.courseLevelId === course.levelId || course.levelId === freeCourseId && !chapter?.isFree 
+    const needToEnroll = subscription?.courseLevelId === course.levelId || course.levelId === freeCourseId && !chapter?.isFree
     const completeOnEnd = !!subscription && !userProgress?.isCompleted;
 
     console.log(!subscription)

@@ -249,6 +249,7 @@ model Project {
   imageUrl    String?
   clientName  String?
   techStack   String  // comma-separated list e.g. "Next.js, PostgreSQL, AWS"
+  category    String? // e.g. "Web Development", "Mobile App"
   outcome     String?
   projectUrl  String?
   isFeatured  Boolean @default(false)

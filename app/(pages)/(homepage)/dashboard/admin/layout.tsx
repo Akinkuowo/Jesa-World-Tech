@@ -19,7 +19,7 @@ export default async function AdminLayout({
           Marketing Administration
         </h1>
         <p className="text-sm text-slate-500">
-          Manage your IT firm's public presence, including projects, blog articles, and your expert team.
+          Manage your IT firm&apos;s public presence, including projects, blog articles, and your expert team.
         </p>
       </div>
       {children}

@@ -14,11 +14,12 @@ import { boolean } from "zod"
 import { Banner } from "@/components/banner"
 import { CourseActions } from "./_components/course-actions"
 
-const CourseIdPage = async ({
-    params
-}: {
-    params: {courseId: string}
-}) => {
+const CourseIdPage = async (
+    props: {
+        params: Promise<{courseId: string}>
+    }
+) => {
+    const params = await props.params;
     const session = await getSession();
     const userId = session?.userId as string;
 
@@ -44,7 +45,7 @@ const CourseIdPage = async ({
             }
         }
     })
-    
+
     // console.log(course)
     const categories = await db.category.findMany({
         orderBy: {
@@ -166,7 +167,7 @@ const CourseIdPage = async ({
             </div>
         </>
         
-    )   
+    )
 }
 
 export default CourseIdPage  

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { Project } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "../../teacher/courses/_components/data-table";
-import { getColumns } from "./_components/columns";
+
+import { getColumns } from "./columns";
 import {
   Dialog,
   DialogContent,
@@ -13,10 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ProjectForm } from "./_components/project-form";
+import { ProjectForm } from "./project-form";
 import { deleteProject } from "@/actions/marketing";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { DataTable } from "../../../teacher/courses/_components/data-table";
 
 // Since this is a client component but needs the initial list, 
 // we'll expect the projects to be fetched in a parent or via a separate fetch.

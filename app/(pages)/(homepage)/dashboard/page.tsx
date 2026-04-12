@@ -7,18 +7,17 @@ import { redirect } from "next/navigation";
 import { CoursesList } from "@/components/courses-list";
 
 interface HomeProps {
-  searchParams: {
+  searchParams: Promise<{
     title?: string;
     categoryId?: string;
-  };
+  }>;
 }
 
-const Home = async ({ 
-    searchParams 
-  }: HomeProps) => {
-  
-    const session = await getSession();
-    const userId = session?.userId as string;
+const Home = async (props: HomeProps) => {
+  const searchParams = await props.searchParams;
+
+  const session = await getSession();
+  const userId = session?.userId as string;
 
   if (!userId) {
     return redirect("/");
@@ -35,8 +34,8 @@ const Home = async ({
     ...searchParams,
   });
 
-  
-  
+
+
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
