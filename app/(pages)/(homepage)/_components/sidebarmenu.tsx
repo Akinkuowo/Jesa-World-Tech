@@ -3,7 +3,6 @@
 import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User } from "lucide-react"
 import { Sidebaritem } from "./sidebaritem";
 import { usePathname } from "next/navigation";
-// import { auth } from "@clerk/nextjs/server";
 
 const Menu = [
     {

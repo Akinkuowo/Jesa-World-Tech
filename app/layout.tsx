@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
+import { ToastProvider } from "@/components/providers/toaster-provider";
+
+import "@/app/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
