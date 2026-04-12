@@ -1,0 +1,276 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id          String  @id @default(uuid())
+  userId      String
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  imageUrl    String?
+  isPublished Boolean @default(false)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  chapters    Chapter[]
+  attachments Attachment[]
+
+  courseLevel Level?  @relation(fields: [levelId], references: [id])
+  levelId     String?
+
+  payments Payment[] @relation("CourseToPayment") // Updated relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([levelId])
+  Enroll Enroll[] @relation("CourseToPayment")
+}
+
+model Payment {
+  id            String @id @default(uuid())
+  userId        String
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseLevelId String
+  courseLevel   Level  @relation(fields: [courseLevelId], references: [id], onDelete: Cascade)
+
+  courseId String // Add this field
+  course   Course @relation("CourseToPayment", fields: [courseId], references: [id], onDelete: Cascade) // Add this relation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Enroll {
+  id            String @id @default(uuid())
+  userId        String
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseLevelId String
+  courseLevel   Level  @relation(fields: [courseLevelId], references: [id], onDelete: Cascade)
+  
+  courseId      String
+  course        Course @relation("CourseToPayment", fields: [courseId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, courseId]) // Ensure unique combination of userId and courseId
+}
+
+
+model Category {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  courses Course[]
+}
+
+model Subscription {
+  id            String  @id @default(uuid())
+  userId        String
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseLevelId String
+  courseLevel   Level   @relation(fields: [courseLevelId], references: [id])
+  
+  validUntil    DateTime // Expiration date of the subscription
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+
+  @@unique([userId, courseLevelId])
+  @@index([userId])
+}
+
+
+model Level {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  courses       Course[]
+  subscriptions Subscription[]
+  payments      Payment[]
+
+  @@index([name])
+  @@index([id])
+  Enroll Enroll[]
+}
+
+model Attachment {
+  id       String @id @default(uuid())
+  name     String
+  url      String
+  courseId String
+
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  videoUrl    String?
+  position    Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  muxData MuxData?
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userProgress UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id        String  @id @default(uuid())
+  assetId   String
+  playackId String?
+
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([chapterId, userId])
+  @@index([chapterId])
+}
+
+model PaystackCustomer {
+  id                 String @id @default(uuid())
+  userId             String @unique
+  user               User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paystackCustomerId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  password      String    // Hashed password
+  image         String?
+  role          UserRole  @default(STUDENT)
+  
+  courses       Course[]  // For teachers (courses they created)
+  enrolled      Enroll[]  
+  subscriptions Subscription[]
+  payments      Payment[]
+  progress      UserProgress[]
+  paystackCustomers PaystackCustomer[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ─── IT Firm Models ────────────────────────────────────────────────────────
+// ... (rest of the file)
+
+// ─── IT Firm Models ────────────────────────────────────────────────────────
+
+model Service {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  icon        String  // lucide icon name or emoji
+  slug        String  @unique
+  isActive    Boolean @default(true)
+  order       Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String?
+  clientName  String?
+  techStack   String  // comma-separated list e.g. "Next.js, PostgreSQL, AWS"
+  projectUrl  String?
+  isFeatured  Boolean @default(false)
+  isPublished Boolean @default(true)
+  order       Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isFeatured])
+  @@index([isPublished])
+}
+
+model JobListing {
+  id           String  @id @default(uuid())
+  title        String
+  description  String
+  location     String  // e.g. "Lagos, Nigeria" or "Remote"
+  type         String  // "Full-time" | "Part-time" | "Contract" | "Internship"
+  department   String? // e.g. "Engineering", "Sales"
+  requirements String? // multi-line text
+  isOpen       Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isOpen])
+  @@index([department])
+}
+
+model ContactInquiry {
+  id      String  @id @default(uuid())
+  name    String
+  email   String
+  phone   String?
+  subject String
+  message String
+  isRead  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isRead])
+  @@index([email])
+}
