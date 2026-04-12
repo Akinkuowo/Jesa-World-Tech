@@ -178,8 +178,6 @@ export async function login(formData: FormData) {
 
 export async function logout() {
   await deleteSession();
-  revalidatePath("/");
-  redirect("/");
 }
 
 export const newVerification = async (token: string) => {

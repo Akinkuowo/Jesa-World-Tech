@@ -5,8 +5,8 @@ import { db } from "@/lib/db";
 import Mux from "@mux/mux-node";
 
 const mux = new Mux({
-    tokenId: process.env['MUX_TOKEN_ID'],
-    tokenSecret: process.env['MUX_TOKEN_SECRET'],
+    tokenId: process.env['MUX_TOKEN_ID'] || 'dummy_token',
+    tokenSecret: process.env['MUX_TOKEN_SECRET'] || 'dummy_secret',
 });
 
 // Access Mux video API

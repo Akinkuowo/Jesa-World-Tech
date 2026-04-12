@@ -1,16 +1,19 @@
-// import { dbClient } from '@db/client';
 import axios from 'axios';
 import { db } from './db';
-import { auth } from '@clerk/nextjs/server';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from './session';
+import { NextResponse } from 'next/server';
 
+export default async function handler(req: Request) {
+    const { reference, levelId } = await req.json();
+    const session = await getSession();
+    const userId = session?.userId as string;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { reference, levelId } = req.body;
-    const { userId } = auth();  // Clerk authentication to get user ID
+    if (!userId) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     if (!reference || !levelId) {
-        return res.status(400).json({ error: 'Payment reference or level ID is missing' });
+        return NextResponse.json({ error: 'Payment reference or level ID is missing' }, { status: 400 });
     }
 
     try {
@@ -24,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const paymentData = verificationResponse.data;
 
         if (paymentData.status !== 'success') {
-            return res.status(400).json({ error: 'Payment verification failed' });
+            return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
         }
 
         // Check if the user already has an active subscription
@@ -37,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
 
         if (existingSubscription) {
-            return res.status(400).json({ error: 'You already have an active subscription to this level' });
+            return NextResponse.json({ error: 'You already have an active subscription to this level' }, { status: 400 });
         }
 
         // Calculate the expiration date (30 days from now)
@@ -63,8 +66,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
         });
 
-        return res.status(200).json({ subscription });
+        return NextResponse.json({ subscription });
     } catch (error) {
-        return res.status(500).json({ error: 'Payment verification failed'});
+        return NextResponse.json({ error: 'Payment verification failed'}, { status: 500 });
     }
 }

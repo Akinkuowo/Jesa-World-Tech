@@ -76,7 +76,7 @@ export const TeamClient = ({ initialData }: TeamClientProps) => {
         </Dialog>
       </div>
       <div className="p-4 bg-white rounded-xl border shadow-sm">
-         <DataTable columns={columns} data={initialData} />
+         <DataTable columns={columns} data={initialData} searchKey="name" />
       </div>
     </div>
   );

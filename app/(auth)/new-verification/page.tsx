@@ -99,11 +99,11 @@ export default function NewVerificationPage() {
             </div>
 
             <div className="pt-4 border-t border-white/10">
-              <Link href="/login" className="block w-full">
-                <Button className="w-full bg-white/[0.03] hover:bg-white/[0.08] text-white border border-white/10 backdrop-blur-md rounded-xl py-6 transition-all duration-300">
+              <Button asChild className="w-full bg-white/[0.03] hover:bg-white/[0.08] text-white border border-white/10 backdrop-blur-md rounded-xl py-6 transition-all duration-300">
+                <Link href="/login" className="block w-full">
                   Return to Dashboard
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

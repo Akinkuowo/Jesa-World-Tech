@@ -28,11 +28,13 @@ import { Input } from "@/components/ui/input"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  searchKey?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  searchKey = "title",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -52,16 +54,18 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  // Prevent crashing if a table doesn't have the search key defined in its columns
+  const filterColumn = table.getColumn(searchKey);
+
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter courses..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
+          placeholder={`Filter ${searchKey}...`}
+          value={(filterColumn?.getFilterValue() as string) ?? ""}
+          onChange={(event) => filterColumn?.setFilterValue(event.target.value)}
           className="max-w-sm"
+          disabled={!filterColumn}
         />
         
       </div>

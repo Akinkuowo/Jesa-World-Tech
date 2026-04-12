@@ -7,6 +7,8 @@ const publicRoutes = [
   "/",
   "/login",
   "/register",
+  "/admin/login",
+  "/admin/register",
   "/new-verification",
   "/reset",
   "/new-password",
@@ -40,7 +42,7 @@ export default async function middleware(req: NextRequest) {
   if (
     isPublicRoute &&
     session?.userId &&
-    (path.startsWith("/login") || path.startsWith("/register"))
+    (path.startsWith("/login") || path.startsWith("/register") || path.startsWith("/admin/login") || path.startsWith("/admin/register"))
   ) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }

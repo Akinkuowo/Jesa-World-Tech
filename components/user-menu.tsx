@@ -52,7 +52,10 @@ export const UserMenu = () => {
         <DropdownMenuSeparator className="bg-white/5" />
         <DropdownMenuItem 
           className="cursor-pointer text-red-400 focus:text-red-400 focus:bg-red-400/10"
-          onClick={() => logout()}
+          onClick={async () => {
+            await logout();
+            window.location.href = "/";
+          }}
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>

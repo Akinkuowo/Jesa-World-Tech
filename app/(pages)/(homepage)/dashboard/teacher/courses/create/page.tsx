@@ -99,11 +99,11 @@ const CreatePage = () => {
                             )}
                         />
                         <div className="flex item-center gap-x-2">
-                            <Link href="/">
-                                <Button type="button" variant="ghost">
+                            <Button type="button" variant="ghost" asChild>
+                                <Link href="/">
                                     Cancel
-                                </Button>
-                            </Link>
+                                </Link>
+                            </Button>
                             <Button 
                                 type="submit"
                                 disabled={!isValid || isSubmitting}

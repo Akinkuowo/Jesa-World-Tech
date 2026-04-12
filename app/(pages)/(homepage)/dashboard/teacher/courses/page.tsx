@@ -27,12 +27,12 @@ const TeacherPage = async () => {
 
     return ( 
         <div className="p-6">
-            <Link href="/teacher/courses/create">
-                <Button>
+            <Button asChild>
+                <Link href="/teacher/courses/create">
                     <PlusCircle className="h-4 w-4 mr-2"/>
                     New Course
-                </Button>
-            </Link>
+                </Link>
+            </Button>
             <DataTable columns={columns} data={courses} />
         </div>
      );

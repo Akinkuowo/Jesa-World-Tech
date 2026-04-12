@@ -83,7 +83,10 @@ export default function MarketingNavbar() {
                   Dashboard
                 </Link>
                 <button
-                  onClick={() => logout()}
+                  onClick={async () => {
+                    await logout();
+                    window.location.href = "/";
+                  }}
                   className="px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 text-sm font-medium"
                 >
                   <LogOut className="w-4 h-4" />
@@ -148,9 +151,10 @@ export default function MarketingNavbar() {
                     Dashboard
                   </Link>
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       setMobileOpen(false);
-                      logout();
+                      await logout();
+                      window.location.href = "/";
                     }}
                     className="flex w-full items-center justify-center gap-2 px-4 py-3 rounded-lg text-white/80 hover:text-white hover:bg-white/5 text-sm font-medium text-center"
                   >
