@@ -49,6 +49,19 @@ const TeamMemberSchema = z.object({
   order: z.number().int().default(0),
 });
 
+const JobListingSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  location: z.string().min(1, "Location is required"),
+  type: z.string().min(1, "Type is required"),
+  department: z.string().optional(),
+  level: z.string().optional(),
+  skills: z.string().optional(),
+  gradient: z.string().optional(),
+  requirements: z.string().optional(),
+  isOpen: z.boolean().default(true),
+});
+
 // --- Project Actions ---
 export const upsertProject = async (values: z.infer<typeof ProjectSchema>, id?: string) => {
   if (!(await isAdmin())) return { error: "Unauthorized" };
@@ -143,6 +156,39 @@ export const deleteTeamMember = async (id: string) => {
     revalidatePath("/team");
     revalidatePath("/dashboard/admin/team");
     return { success: "Member deleted" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};
+
+// --- Job Actions ---
+export const upsertJobListing = async (values: z.infer<typeof JobListingSchema>, id?: string) => {
+  if (!(await isAdmin())) return { error: "Unauthorized" };
+
+  const validatedFields = JobListingSchema.safeParse(values);
+  if (!validatedFields.success) return { error: "Invalid fields" };
+
+  try {
+    if (id) {
+      await db.jobListing.update({ where: { id }, data: validatedFields.data });
+    } else {
+      await db.jobListing.create({ data: validatedFields.data });
+    }
+    revalidatePath("/careers");
+    revalidatePath("/dashboard/admin/jobs");
+    return { success: id ? "Job updated" : "Job created" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};
+
+export const deleteJobListing = async (id: string) => {
+  if (!(await isAdmin())) return { error: "Unauthorized" };
+  try {
+    await db.jobListing.delete({ where: { id } });
+    revalidatePath("/careers");
+    revalidatePath("/dashboard/admin/jobs");
+    return { success: "Job deleted" };
   } catch (error) {
     return { error: "Something went wrong" };
   }

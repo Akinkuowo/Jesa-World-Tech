@@ -9,14 +9,13 @@ import { IconType } from "react-icons/lib"
 interface CategoryItemProps {
     label: string,
     value?: string,
-    icons?: IconType
-
+    icon?: IconType
 }
 
 const CategoryItem = ({
     label,
     value,
-    icons: Icon
+    icon: Icon
 }: CategoryItemProps) => {
     const onPathName = usePathname()
     const router = useRouter()
@@ -41,15 +40,15 @@ const CategoryItem = ({
 
     return (
         <button 
-        onClick={onClick}
-        className={cn(
-            "py-2 px-3 text-sm border border-slate-200 flex rounded-full items-center gap-x-1 hover:border-sky-700 transition",
-            isSelected && "border-sky-700 bg-skg-200/20 text-sky-800"
-        )}
-        type="button"
+            onClick={onClick}
+            className={cn(
+                "py-2 px-4 text-xs md:text-sm border border-slate-200 flex rounded-full items-center gap-x-2 hover:border-electric-blue-500 hover:bg-slate-50 transition-all duration-200",
+                isSelected && "border-electric-blue-600 bg-electric-blue-500/10 text-electric-blue-700 font-medium"
+            )}
+            type="button"
         >
-            {Icon && <Icon  size={20}/>}
-            <div className="truncate">
+            {Icon && <Icon size={18} className={cn(isSelected && "text-electric-blue-600")} />}
+            <div className="truncate whitespace-nowrap">
                 {label}
             </div>
         </button>

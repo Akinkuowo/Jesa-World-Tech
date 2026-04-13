@@ -145,7 +145,7 @@ model Chapter {
 model MuxData {
   id        String  @id @default(uuid())
   assetId   String
-  playackId String?
+  playbackId String?
 
   chapterId String  @unique
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
@@ -266,11 +266,14 @@ model Project {
 model JobListing {
   id           String  @id @default(uuid())
   title        String
-  description  String
+  description  String  @db.Text
   location     String  // e.g. "Lagos, Nigeria" or "Remote"
   type         String  // "Full-time" | "Part-time" | "Contract" | "Internship"
   department   String? // e.g. "Engineering", "Sales"
-  requirements String? // multi-line text
+  level        String? // e.g. "Junior", "Mid-level", "Senior"
+  skills       String? @db.Text // Comma-separated list
+  gradient     String? // Tailwind gradient class e.g. "from-purple-500 to-blue-500"
+  requirements String? @db.Text // multi-line text
   isOpen       Boolean @default(true)
 
   createdAt DateTime @default(now())

@@ -1,9 +1,11 @@
 "use client";
 
-import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User, ShieldCheck, PenTool, Users2, Rocket } from "lucide-react"
+import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User, ShieldCheck, PenTool, Users2, Rocket, LogOut } from "lucide-react"
 import { Sidebaritem } from "./sidebaritem";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/auth-provider";
+import { logout } from "@/actions/auth";
+import toast from "react-hot-toast";
 
 const Menu = [
     {
@@ -36,13 +38,7 @@ const Menu = [
         label: "Internal News",
         href: "/dashboard/news"
     },
-    {
-        icon: BriefcaseBusiness,
-        label: "Admin Careers",
-        href: "/dashboard/careers"
-    },
 ]
-
 
 const teacherMenu = [
     {
@@ -69,6 +65,11 @@ const adminMenu = [
         href: "/dashboard/admin/projects"
     },
     {
+        icon: BriefcaseBusiness,
+        label: "Manage Jobs",
+        href: "/dashboard/admin/jobs"
+    },
+    {
         icon: PenTool,
         label: "Manage Blog",
         href: "/dashboard/admin/blog"
@@ -87,7 +88,19 @@ const adminMenu = [
 
 export const Sidebarmenu = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const { user } = useAuth();
+
+    const onLogout = async () => {
+        try {
+            await logout();
+            toast.success("Logged out");
+            router.push("/");
+            router.refresh();
+        } catch {
+            toast.error("Something went wrong");
+        }
+    }
     
     const isTeacherPage = pathname?.includes("/dashboard/teacher");
     const isAdminPage = pathname?.includes("/dashboard/admin");
@@ -97,27 +110,37 @@ export const Sidebarmenu = () => {
     if (isAdminPage) menuList = adminMenu;
     
     return (
-        <div className="flex flex-col w-full">
-           {
-           menuList.map((menu) =>(
-                <Sidebaritem 
-                    key={menu.href}
-                    icon={menu.icon}
-                    label={menu.label}
-                    href={menu.href}
-                />
-           ))
-           }
-           {user?.role === "ADMIN" && !isAdminPage && !isTeacherPage && (
-                <div className="px-3 py-2">
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-3">Administration</p>
+        <div className="flex flex-col h-full">
+            <div className="flex flex-col w-full flex-grow">
+               {
+               menuList.map((menu) =>(
                     <Sidebaritem 
-                        icon={ShieldCheck}
-                        label="General Admin"
-                        href="/dashboard/admin"
+                        key={menu.href}
+                        icon={menu.icon}
+                        label={menu.label}
+                        href={menu.href}
                     />
-                </div>
-           )}
+               ))
+               }
+               {user?.role === "ADMIN" && !isAdminPage && !isTeacherPage && (
+                    <div className="px-3 py-2 border-t mt-4">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-3">Administration</p>
+                        <Sidebaritem 
+                            icon={ShieldCheck}
+                            label="General Admin"
+                            href="/dashboard/admin"
+                        />
+                    </div>
+               )}
+            </div>
+            
+            <div className="mt-auto border-t py-2">
+                <Sidebaritem 
+                    icon={LogOut}
+                    label="Sign Out"
+                    onClick={onLogout}
+                />
+            </div>
         </div>
     )
 }

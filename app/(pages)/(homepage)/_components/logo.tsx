@@ -9,7 +9,7 @@ export const Logo = () => {
                     src="/logo.png"
                     alt="JESA World Technology Logo"
                     fill
-                    className="object-contain brightness-0 invert"
+                    className="object-contain"
                 />
             </div>
         </Link>

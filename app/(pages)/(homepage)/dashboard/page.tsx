@@ -37,16 +37,20 @@ const Home = async (props: HomeProps) => {
 
 
   return (
-    <>
+    <div className="flex flex-col h-full bg-slate-50/30">
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
         <SearchInput />
       </div>
-      <div className="p-6 space-y-4">
+      <div className="p-6 pb-2">
         <Categories items={categories} />
       </div>
-      {/* Add logic to render courses here */}
-      <CoursesList items={courses} />
-    </>
+      <div className="px-6 py-4 flex-grow">
+        <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm min-h-[60vh] p-6 lg:p-10">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">Explore Courses</h2>
+            <CoursesList items={courses} />
+        </div>
+      </div>
+    </div>
   );
 };
 

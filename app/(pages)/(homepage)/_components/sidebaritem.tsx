@@ -8,31 +8,41 @@ import { usePathname, useRouter } from "next/navigation";
 interface SidebarItemProps {
     icon: LucideIcon;
     label: string;
-    href: string;      
+    href?: string;      
+    onClick?: () => void;
 }
 
 export const Sidebaritem = ({
     icon: Icon, 
     label, 
-    href
+    href,
+    onClick
 }: SidebarItemProps) =>{
     const pathname = usePathname();
     const router = useRouter();
 
     const isActive = 
-    (pathname === "/" && href === "/") || pathname === href || pathname?.startsWith(`${href}/`)
+    href ? ((pathname === "/" && href === "/") || 
+    pathname === href || 
+    (href !== "/dashboard" && href !== "/" && pathname?.startsWith(`${href}/`))) : false;
 
-    const onClick = () => {
-        router.push(href)
+    const onHandleClick = () => {
+        if (onClick) {
+            onClick();
+            return;
+        }
+        if (href) {
+            router.push(href)
+        }
     }
 
     return (
         <button    
-            onClick={onClick}
+            onClick={onHandleClick}
             type="button"
             className={cn(
-                "flex items-center gap-x-2 text-cyan-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/10",
-                isActive && "text-sky-700 bg-yellow-400 hover:bg-sky-200/20 hover:text-sky-700"
+                "flex items-center gap-x-2 text-slate-600 text-sm font-[500] pl-6 transition-all hover:text-slate-800 hover:bg-slate-300/10",
+                isActive && "text-electric-blue-600 bg-electric-blue-500/10 hover:bg-electric-blue-500/20 hover:text-electric-blue-700"
             )}
         >
             <div className="flex items-center gap-x-2 py-4">
@@ -40,14 +50,14 @@ export const Sidebaritem = ({
                     size={22}
                     className={cn(
                       "text-slate-500",
-                      isActive && "text-sky-700"  
+                      isActive && "text-electric-blue-600"  
                     )}
                 />
                 {label}
             </div>
             <div 
                 className={cn(
-                    "ml-auto opacity-0 border border-sky-700 h-full transition-all", 
+                    "ml-auto opacity-0 border border-electric-blue-600 h-full transition-all", 
                     isActive && "opacity-100"
                 )} 
             

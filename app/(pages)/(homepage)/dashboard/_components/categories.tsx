@@ -1,24 +1,48 @@
 "use client"
 
 import { Category } from "@prisma/client"
-import { FcEngineering, FcAdvertising, FcMultipleDevices, FcTabletAndroid, FcMusic, FcSportsMode, FcCamera, FcSalesPerformance, FcHighBattery, FcBusinessman, FcPhoneAndroid, FcBusiness } from "react-icons/fc"
-import { IconType } from "react-icons/lib"
+import { 
+    BrainCircuit, 
+    Link2, 
+    Cloud, 
+    ShieldCheck, 
+    Database, 
+    Infinity, 
+    Megaphone, 
+    Gamepad2, 
+    Cpu, 
+    Cog,
+    Music,
+    Palette,
+    Calculator,
+    Briefcase,
+    Layout,
+    Code,
+    LucideIcon
+} from "lucide-react"
 import CategoryItem from "./category-item"
 
 interface CategoriesProps {
     items: Category[]
 }
 
-const iconMap: Record<Category["name"], IconType> = {
-    "Music": FcMusic,
-    "Design": FcCamera,
-    "Personal Development": FcSportsMode,
-    "Marketing": FcAdvertising,
-    "Development": FcBusinessman,
-    "Finance & Accounting": FcSalesPerformance,
-    "Business": FcBusiness,
-    "IT & Software": FcPhoneAndroid
-
+const iconMap: Record<string, LucideIcon> = {
+    "Artificial Intelligence": BrainCircuit,
+    "Blockchain": Link2,
+    "Cloud Computing": Cloud,
+    "Cyber Security": ShieldCheck,
+    "Data Science": Database,
+    "DevOps": Infinity,
+    "Digital Marketing": Megaphone,
+    "Game Development": Gamepad2,
+    "Internet of Things": Cpu,
+    "Machine Learning": Cog,
+    "Music": Music,
+    "Development": Code,
+    "Design": Palette,
+    "Finance & Accounting": Calculator,
+    "Business": Briefcase,
+    "IT & Software": Layout
 }
 
 const Categories = ({
@@ -30,7 +54,7 @@ const Categories = ({
                 <CategoryItem 
                     key={item.id}
                     label={item.name}
-                    icons={iconMap[item.name]}
+                    icon={iconMap[item.name] || Layout}
                     value={item.id}
                 />
             ) )}

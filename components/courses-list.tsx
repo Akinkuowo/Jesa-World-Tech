@@ -1,15 +1,13 @@
 import { Course, Category, Level } from "@prisma/client";
+import { SearchX } from "lucide-react";
 import { CourseCard } from "./course-card";
 
-
-// Define the type with a single definition
 type CourseWithProgressWithCategory = Course & {
     category: Category | null;
     chapters: { id: string }[];
     progress: number | null;
     level: Level | null;
 };
-
 
 interface CoursesListProps {
     items: CourseWithProgressWithCategory[];
@@ -18,11 +16,16 @@ interface CoursesListProps {
 export const CoursesList = ({
     items
 }: CoursesListProps) => {
-    // Debug log
     if (!items || items.length === 0) {
         return (
-            <div className="text-center text-sm text-muted-foreground mt-10">
-                No courses available.
+            <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-8 bg-slate-50/50 rounded-2xl border-2 border-dashed border-slate-200 mt-6 mx-6">
+                <div className="bg-white p-4 rounded-full shadow-sm mb-4">
+                    <SearchX className="h-10 w-10 text-slate-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">No Courses Found</h3>
+                <p className="text-slate-500 max-w-sm mx-auto mb-6">
+                    We couldn&apos;t find any courses matching your current search or category. Try adjusting your filters or check back later!
+                </p>
             </div>
         );
     }

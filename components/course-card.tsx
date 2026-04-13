@@ -23,74 +23,54 @@ export const CourseCard = ({
     courseLevel
 }: CourseCardProps) => {
     return (
-        <Link href={`/courses/${id}`} key={id} className="course-card">
-            <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
-                <div className="relative w-full aspect-video rounded-md overflow-hidden">
-                {imageUrl && 
-                // <img src={imageUrl} alt={title} />
+        <Link href={`/courses/${id}`} className="group transition overflow-hidden border rounded-2xl p-3 h-full bg-white hover:shadow-md hover:border-electric-blue-200 transition-all duration-300">
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-sm">
+                {imageUrl ? (
                     <Image 
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         alt={title}
                         src={imageUrl}
                     />
-                } 
-                
-                </div>
-                <div className="flex flex-col pt-2">
-                    <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
-                        {title}
+                ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-slate-100">
+                        <BookOpen className="h-10 w-10 text-slate-300" />
                     </div>
-                    <p className="text-xs text-muted-foreground">
-                        {`${category} | ${courseLevel}`}
-                    </p>
-                    <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
-                        <div className="flex items-center gap-x-1 text-slate-500">
-                            <IconBadge 
-                                size="sm"
-                                icon={BookOpen}
-                                
-                            />
-                            <span>
-                                {chaptersLength}{chaptersLength == 1 ? " Chapter" : " Chapters" } 
-                            </span>
-                        </div>
-                        
-                    </div>
-                    {
-                    progress ? (
-                        `${progress}%`
-                    ) : (
-                        <div>
-                            {/* <Link href={`/`}>
-                                <button className="py-2 px-3 text-sm border border-slate-200 fle bg-yellow-400 rounded items-center gap-x-1 hover:border-sky-700 transition">
-                                    Enroll
-                                </button>
-                            </Link> */}
-                        </div>
-                    )}
-                    {/* {progress != null ? (
-                            <div>
-                                 <Link href={`/`}>
-                                    <button>
-                                        Enrolls
-                                    </button>
-                                </Link>
-                            </div>
-                    ): (
-                        <Link href={`/`}>
-                            <button>
-                                Enrolled
-                            </button>
-                        </Link>
-                    )} */}
-                </div>
+                )}
             </div>
-            {/*
-            
-           
-            <p>{chaptersLength} Chapters</p>
-            <p>Progress: {progress ? `${progress}%` : "Not started"}</p> */}
+            <div className="flex flex-col pt-3 gap-y-1">
+                <div className="text-base md:text-sm font-bold text-slate-900 group-hover:text-electric-blue-600 transition line-clamp-2 min-h-[2.5rem]">
+                    {title}
+                </div>
+                <div className="flex items-center gap-x-2">
+                   <p className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                        {category}
+                    </p>
+                    <span className="text-slate-200 text-xs">|</span>
+                    <p className="text-xs font-medium text-electric-blue-600">
+                        {courseLevel}
+                    </p>
+                </div>
+                <div className="flex items-center gap-x-2 text-xs text-slate-500 mt-2">
+                    <div className="flex items-center gap-x-1.5 bg-slate-50 px-2 py-1 rounded-lg">
+                        <IconBadge 
+                            size="sm"
+                            icon={BookOpen}
+                        />
+                        <span className="font-medium">
+                            {chaptersLength}{chaptersLength == 1 ? " Chapter" : " Chapters" } 
+                        </span>
+                    </div>
+                </div>
+                {progress !== null && (
+                    <div className="mt-2">
+                        {/* Progress Bar placeholder for future use */}
+                        <div className="text-xs font-semibold text-electric-blue-600">
+                            {progress}% Complete
+                        </div>
+                    </div>
+                )}
+            </div>
         </Link>
     );
 };

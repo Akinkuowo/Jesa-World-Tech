@@ -1,6 +1,16 @@
 import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "missing_api_key");
+
+// SMTP Transporter for contact form (Gmail)
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 // Use a fallback domain if you haven't verified a domain on Resend.
 // For testing on the free tier, you must use onboarding@resend.dev and send *to* your own email.
@@ -36,7 +46,6 @@ export const sendVerificationEmail = async (
     `,
   });
 };
-
 
 export const sendPasswordResetEmail = async (
   email: string,
@@ -75,14 +84,15 @@ export const sendContactInquiryEmail = async (
   message: string,
   phone?: string | null
 ) => {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn("⚠️ RESEND_API_KEY is not defined. Email suppression for: ", subject);
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.warn("⚠️ SMTP credentials not found. Email suppression for: ", subject);
     return;
   }
 
-  await resend.emails.send({
-    from: "Contact Form <onboarding@resend.dev>",
+  const mailOptions = {
+    from: `"${name}" <${process.env.SMTP_USER}>`,
     to: "jesaworldtech@gmail.com",
+    replyTo: email,
     subject: `New Inquiry: ${subject}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.6;">
@@ -99,10 +109,12 @@ export const sendContactInquiryEmail = async (
         </div>
         
         <p style="margin-top: 25px; font-size: 12px; color: #666;">
-          This email was sent from the JESA World Technology platform.
+          This email was sent via Gmail SMTP for JESA World Technology.
         </p>
       </div>
     `,
-  });
+  };
+
+  await transporter.sendMail(mailOptions);
 };
 
