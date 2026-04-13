@@ -4,8 +4,17 @@ import type { Metadata } from "next";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "About Us | JESA World Technology",
+  title: "About Us",
   description: "Learn about JESA World Technology — our mission, story, values, and the expert team driving Africa's digital transformation.",
+  openGraph: {
+    title: "About JESA World Technology | Our Mission & Story",
+    description: "Discover how we are powering digital transformation across Africa since 2016.",
+    type: "website",
+  },
+  twitter: {
+    title: "About JESA World Technology",
+    description: "Learn about our mission to provide world-class technology solutions in Africa.",
+  }
 };
 
 const values = [

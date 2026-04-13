@@ -10,6 +10,37 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import Link from "next/link";
 import { File } from "lucide-react";
+import type { Metadata } from "next";
+
+export async function generateMetadata(
+    props: { 
+        params: Promise<{ courseId: string; chapterId: string; }>
+    }
+): Promise<Metadata> {
+    const params = await props.params;
+    const { chapter, course } = await GetChapter({
+        userId: "seo", // Placeholder for metadata generation context
+        courseId: params.courseId,
+        chapterId: params.chapterId,
+        course: { levelId: "any" } as any // Minimal context for common getChapter logic
+    });
+
+    if (!chapter || !course) {
+        return {
+            title: "Course Chapter",
+        };
+    }
+
+    return {
+        title: `${chapter.title} | ${course.title}`,
+        description: chapter.description?.substring(0, 160) || `Learn ${chapter.title} in the ${course.title} course at JESA World Technology.`,
+        openGraph: {
+            title: `${chapter.title} | ${course.title}`,
+            description: chapter.description?.substring(0, 160) || `Learn ${chapter.title} in the ${course.title} course.`,
+            type: "article",
+        }
+    };
+}
 
 const ChapterIdPage = async (
     props: { 
@@ -26,7 +57,8 @@ const ChapterIdPage = async (
 
     // Fetch the course object from the database
     const course = await db.course.findUnique({
-        where: { id: params.courseId }
+        where: { id: params.courseId },
+        include: { courseLevel: true }
     });
 
     if (!course) {
@@ -56,18 +88,21 @@ const ChapterIdPage = async (
         course  // Pass the actual course object here
     });
 
-    const freeCourseId = "6610dd85-28fb-4def-9f1e-5bd672ede079";
+    const isFreeLevel = course.courseLevel?.name.toLowerCase() === "free";
 
     // Check if the chapter is locked based on the subscription and the chapter's free status
-    const isLocked = subscription?.courseLevelId !== course.levelId  && !subscription && course.levelId !== freeCourseId;
-    const needToEnroll = subscription?.courseLevelId === course.levelId || course.levelId === freeCourseId && !chapter?.isFree
+    const isLocked = !isFreeLevel && !subscription;
+    const needToEnroll = (subscription?.courseLevelId === course.levelId || isFreeLevel) && !chapter?.isFree;
     const completeOnEnd = !!subscription && !userProgress?.isCompleted;
 
-    console.log(!subscription)
-    console.log(subscription?.courseLevelId !== course.levelId)
-    console.log(course.levelId !== freeCourseId)
-    console.log(isLocked)
+    console.log("isFreeLevel:", isFreeLevel);
+    console.log("subscription:", !!subscription);
+    console.log("isLocked:", isLocked);
 
+
+    if (!chapter) {
+        return redirect(`/courses/${params.courseId}`);
+    }
 
     return (
         <div>
@@ -90,7 +125,7 @@ const ChapterIdPage = async (
                 />
             )}
             <div className="flex flex-col max-w-4xl mx-auto pb-20">
-                <div className="p4">
+                <div className="p-4">
                     <VideoPlayer 
                         chapterId={params.chapterId}
                         title={chapter?.title}
@@ -98,7 +133,8 @@ const ChapterIdPage = async (
                         nextChapter={nextChapter?.id}
                         isLocked={isLocked}
                         completeOnEnd={completeOnEnd}
-                        videoUrl={chapter?.videoUrl!}
+                        videoUrl={chapter?.videoUrl || ""}
+                        playbackId={muxData?.playbackId}
                     />
                 </div>
             </div>

@@ -12,9 +12,15 @@ export async function POST(req: Request) {
     if (!reference || !paidAmount) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
+    // Handle case where reference might be an object or a string
+    const trfRef = typeof reference === 'string' ? reference.trim() : reference?.reference?.trim();
+
+    if (!trfRef) {
+      return NextResponse.json({ message: 'Invalid transaction reference' }, { status: 400 });
+    }
 
     // Make the request to Paystack's verification endpoint
-    const { data } = await axios.get(`https://api.paystack.co/transaction/verify/${reference.reference}`, {
+    const { data } = await axios.get(`https://api.paystack.co/transaction/verify/${trfRef}`, {
       headers: {
         Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
       },
@@ -87,9 +93,11 @@ export async function POST(req: Request) {
     } else {
       return NextResponse.json({ message: 'Payment not successful' }, { status: 400 });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error verifying payment:', error);
-    // console.log(error.response.data); // This will show more information about the error.
+    if (error.response) {
+      console.log('Paystack Error Response:', error.response.data);
+    }
 
     return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }

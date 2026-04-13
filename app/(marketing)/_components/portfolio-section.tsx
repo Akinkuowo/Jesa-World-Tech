@@ -134,9 +134,16 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
                   )}
 
                   {/* View link */}
-                  <div className="mt-5 flex items-center gap-1 text-electric-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ExternalLink className="w-3.5 h-3.5" /> View Project
-                  </div>
+                  {project.projectUrl && (
+                    <a 
+                      href={project.projectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 flex items-center gap-1 text-electric-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity hover:text-electric-blue-300 transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" /> View Project
+                    </a>
+                  )}
                 </div>
               </div>
             );

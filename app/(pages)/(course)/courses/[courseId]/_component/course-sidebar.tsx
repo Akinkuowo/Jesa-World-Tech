@@ -9,6 +9,9 @@ import { CourseProgress } from "./course-progress";
 interface CourseSideBarProps {
 // ... same ...
     course: Course & {
+        courseLevel?: {
+            name: string;
+        } | null;
         chapters: (Chapter & {
             userProgress: UserProgress[] | null;
         })[];
@@ -31,7 +34,7 @@ const CourseSideBar = async ({
 
 
     // Check if the user is subscribed to the course level
-    const freeCourseId = "6610dd85-28fb-4def-9f1e-5bd672ede079";
+    const isFreeLevel = course.courseLevel?.name.toLowerCase() === "free";
     let subscription = null;
 
 
@@ -50,25 +53,19 @@ const CourseSideBar = async ({
         console.error("Error fetching subscription:", error);
     }
 
-    if (enroll && enroll.courseId === course.id) {
-        return (
-            <div className="mt-10">
-                <CourseProgress
-                    variant="success"
-                    value={progressCount}
-                    size="sm"
-                />
-            </div>
-        )
-    }
-    
-
     return (
         <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
             <div className="p-8 flex flex-col border-b">
-                <h1 className="font-semibold">{course.title}</h1>
-                {/* <p>Progress: {progressCount}%</p> */}
-                {/* {Enroll} */}
+                <h1 className="font-semibold mb-2">{course.title}</h1>
+                {enroll && enroll.courseId === course.id && (
+                    <div className="mt-2">
+                        <CourseProgress
+                            variant="success"
+                            value={progressCount}
+                            size="sm"
+                        />
+                    </div>
+                )}
             </div>
             <div className="flex flex-col w-full">
                 {course.chapters.map((chapter) => (
@@ -78,11 +75,10 @@ const CourseSideBar = async ({
                         label={chapter.title}
                         isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
                         courseId={course.id}
-                        isLocked={!chapter.isFree }
+                        isLocked={!chapter.isFree && !isFreeLevel && !subscription}
                     />
                 ))}
             </div>
-            
         </div>
     );
 };

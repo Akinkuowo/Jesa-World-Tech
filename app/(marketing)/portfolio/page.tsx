@@ -4,8 +4,17 @@ import { db } from "@/lib/db";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Portfolio | JESA World Technology",
+  title: "Portfolio",
   description: "Explore JESA World Technology's project portfolio — case studies across cloud, cybersecurity, software development, and more.",
+  openGraph: {
+    title: "Project Portfolio | Real Solutions by JESA World Technology",
+    description: "Explore our archive of successful digital transformations and I.T. projects across multiple industries.",
+    type: "website",
+  },
+  twitter: {
+    title: "JESA World Technology Portfolio",
+    description: "Real solutions. Real impact. Explore our recently completed projects.",
+  }
 };
 
 export default async function PortfolioPage() {
@@ -71,9 +80,16 @@ export default async function PortfolioPage() {
                     <span key={t.trim()} className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/40 border border-white/5">{t.trim()}</span>
                   ))}
                 </div>
-                <div className="mt-4 flex items-center gap-1 text-electric-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ExternalLink className="w-3.5 h-3.5" /> View Case Study
-                </div>
+                {project.projectUrl && (
+                  <a 
+                    href={project.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 flex items-center gap-1 text-electric-blue-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity hover:text-electric-blue-300 transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" /> View Project
+                  </a>
+                )}
               </div>
             </div>
           ))}

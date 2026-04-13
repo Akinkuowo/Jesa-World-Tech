@@ -5,8 +5,17 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Our Team | JESA World Technology",
+  title: "Our Team",
   description: "Meet the experts driving digital transformation across Africa. Our diverse team of engineers, consultants, and strategists.",
+  openGraph: {
+    title: "Meet the JESA World Technology Team | Expert I.T. Consultants",
+    description: "The minds behind the magic — meet the engineers, strategists, and creators building Africa's digital future.",
+    type: "profile",
+  },
+  twitter: {
+    title: "The Experts at JESA World Technology",
+    description: "Meet the leadership and engineering team transforming businesses across Africa.",
+  }
 };
 
 export default async function TeamPage() {

@@ -24,7 +24,7 @@ export const Sidebaritem = ({
     const isActive = 
     href ? ((pathname === "/" && href === "/") || 
     pathname === href || 
-    (href !== "/dashboard" && href !== "/" && pathname?.startsWith(`${href}/`))) : false;
+    (href !== "/dashboard" && href !== "/dashboard/admin" && href !== "/" && pathname?.startsWith(`${href}/`))) : false;
 
     const onHandleClick = () => {
         if (onClick) {

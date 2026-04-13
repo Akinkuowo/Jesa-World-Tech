@@ -4,8 +4,17 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Careers | JESA World Technology",
+  title: "Careers",
   description: "Join the JESA World Technology team — explore exciting career opportunities in cloud, cybersecurity, software development, consulting, and more.",
+  openGraph: {
+    title: "Careers at JESA World Technology | Build the Future With Us",
+    description: "Join a team of brilliant minds driven to transform Africa through technology. Explore world-class opportunities and real impact.",
+    type: "website",
+  },
+  twitter: {
+    title: "Build the Future with JESA World Technology",
+    description: "Join our expert team of engineers and consultants across Africa.",
+  }
 };
 
 const perks = [

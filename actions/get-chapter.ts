@@ -5,8 +5,11 @@ interface GetChapterProps {
     userId: string;
     courseId: string;
     chapterId: string;
-    course: Course;
-    
+    course: Course & {
+        courseLevel?: {
+            name: string;
+        } | null;
+    };
 }
 
 export const GetChapter = async ({
@@ -31,31 +34,19 @@ export const GetChapter = async ({
             };
         }
 
-        // Check if the user is subscribed to the course's level (only if levelId is not the special one)
+        // Check if the user is subscribed to the course's level (only if level is not "Free")
         let subscription = null;
-        if (course.levelId !== "6610dd85-28fb-4def-9f1e-5bd672ede079") {
+        const isFreeLevel = course.courseLevel?.name.toLowerCase() === "free";
+
+        if (!isFreeLevel) {
             subscription = await db.subscription.findUnique({
                 where: {
                     userId_courseLevelId: {
                         userId: userId,
-                        courseLevelId: course.levelId
+                        courseLevelId: course.levelId!
                     }
                 }
             });
-
-            // if (!subscription) {
-            //     console.log("User is not subscribed to this course level.");
-            //     return {
-            //         chapter: null,
-            //         course: null,
-            //         muxData: null,
-            //         attachments: [],
-            //         nextChapter: null,
-            //         userProgress: null,
-            //         subscription: null,
-            //         lockedMessage: "You have not subscribed to this course level."
-            //     };
-            // }
         }
 
         // Fetch the course and chapter
@@ -91,7 +82,7 @@ export const GetChapter = async ({
         let attachments: Attachment[] = [];
         let nextChapter: Chapter | null = null;
 
-        if (chapter.isFree || subscription || course.levelId === "6610dd85-28fb-4def-9f1e-5bd672ede079") {
+        if (chapter.isFree || subscription || isFreeLevel) {
             muxData = await db.muxData.findUnique({
                 where: {
                     chapterId: chapterId

@@ -30,6 +30,7 @@ const CourseLayout = async (
       id: params.courseId,
     },
     include: {
+      courseLevel: true,
       chapters: {
         where: {
           isPublished: true,

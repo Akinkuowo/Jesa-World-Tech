@@ -3,8 +3,16 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "I.T. Services | JESA World Technology",
+  title: "Services",
   description: "Explore our full range of professional I.T. services — cloud solutions, cybersecurity, software development, IT consulting, data analytics, and network infrastructure.",
+  openGraph: {
+    title: "Expert I.T. Services | JESA World Technology",
+    description: "Tailored technology solutions from cloud architecture to world-class software development and cybersecurity.",
+  },
+  twitter: {
+    title: "Enterprise-Grade I.T. Services by JESA",
+    description: "Cloud, Cybersecurity, Software, and Strategy for modern businesses.",
+  }
 };
 
 const services = [

@@ -3,8 +3,16 @@ import ContactSection from "../_components/contact-section";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | JESA World Technology",
+  title: "Contact Us",
   description: "Get in touch with JESA World Technology. Start a project, request a quote, or ask us anything about our I.T. services.",
+  openGraph: {
+    title: "Contact JESA World Technology | Start Your Digital Project",
+    description: "Ready to innovate? Reach out to our team for world-class software, cloud, and cybersecurity solutions.",
+  },
+  twitter: {
+    title: "Start Your Project with JESA World Technology",
+    description: "Get expert I.T. consulting and software development services.",
+  }
 };
 
 export default function ContactPage() {

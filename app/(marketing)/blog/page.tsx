@@ -5,8 +5,17 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Blog | JESA World Technology",
+  title: "Blog",
   description: "Insights, news, and technical guides from the forefront of digital transformation in Africa.",
+  openGraph: {
+    title: "Tech Frontiers Blog | JESA World Technology",
+    description: "Expert insights, industry news, and technical deep-dives from Africa's trusted I.T. partner.",
+    type: "website",
+  },
+  twitter: {
+    title: "Tech Frontiers: The JESA World Technology Blog",
+    description: "Stay ahead of the curve with insights from our engineering and strategy teams.",
+  }
 };
 
 export default async function BlogPage() {

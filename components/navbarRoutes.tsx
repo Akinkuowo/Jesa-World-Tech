@@ -23,15 +23,23 @@ export const NavbarRoutes = () => {
                 </div>
             )}
             <div className="flex gap-x-2 ml-auto">
-                {coursePage && (
+                {pathname?.includes("/chapters/") ? (
                     <Link
-                    href={`/`}
-                    className="flex items-center text-sm hover:opacity-75 transition mb-2"
-                >
-                    <ArrowLeft className="w-4 h-4 mr-2"/>
-                    Back to Course Page
-                </Link>
-                )}
+                        href={`/courses/${pathname.split("/")[2]}`}
+                        className="flex items-center text-sm hover:opacity-75 transition mb-2"
+                    >
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Back to Course Overview
+                    </Link>
+                ) : coursePage ? (
+                    <Link
+                        href={`/dashboard`}
+                        className="flex items-center text-sm hover:opacity-75 transition mb-2"
+                    >
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Back to Dashboard
+                    </Link>
+                ) : null}
                 {user ? (
                     <UserMenu />
                 ) : (

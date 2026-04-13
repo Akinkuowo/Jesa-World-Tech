@@ -55,6 +55,11 @@ export const ourFileRouter = {
     .onUploadComplete(({ metadata }) => {
       console.log(`Upload complete for user: ${metadata.userId}`);
     }),
+  userImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(({ metadata }) => {
+      console.log(`User image upload complete for user: ${metadata.userId}`);
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

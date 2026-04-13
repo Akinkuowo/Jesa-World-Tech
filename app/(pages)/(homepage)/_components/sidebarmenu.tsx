@@ -25,8 +25,13 @@ const Menu = [
     },
     {
         icon: GanttChartSquare,
-        label: "Subscription",
+        label: "Subscription Plans",
         href: "/dashboard/plan"
+    },
+    {
+        icon: ShieldCheck,
+        label: "My Subscription",
+        href: "/dashboard/my-subscription"
     },
     {
         icon: Radio,
@@ -78,6 +83,11 @@ const adminMenu = [
         icon: Users2,
         label: "Manage Team",
         href: "/dashboard/admin/team"
+    },
+    {
+        icon: Users2,
+        label: "Subscribers",
+        href: "/dashboard/admin/subscribers"
     },
     {
         icon: PenTool,
