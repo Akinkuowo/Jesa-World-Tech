@@ -85,7 +85,7 @@ export const CourseActions = ({
                 }
             )
             router.refresh()
-            router.push(`/teacher/courses/`)
+            router.push(`/dashboard/teacher/courses/`)
         }catch{
             toast.error("Something went wrong", 
                 {

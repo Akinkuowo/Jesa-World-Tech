@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { Send, Mail, Phone, MapPin, CheckCircle, Loader2 } from "lucide-react";
 
 const contactInfo = [
-  { icon: Mail, label: "Email", value: "hello@jesaworldtech.com", href: "mailto:hello@jesaworldtech.com" },
-  { icon: Phone, label: "Phone", value: "+234 800 JESA TECH", href: "tel:+2348005372832" },
-  { icon: MapPin, label: "Office", value: "Victoria Island, Lagos, Nigeria", href: "#" },
+  { icon: Mail, label: "Email", value: "info@jesaworldtech.com.ng", href: "mailto:info@jesaworldtech.com.ng" },
+  { icon: Phone, label: "Phone", value: "+234 905 034 5898", href: "tel:+2349050345898" },
+  { icon: MapPin, label: "Office", value: "Ago Palace Way, Lagos, Nigeria", href: "#" },
 ];
 
 export default function ContactSection() {

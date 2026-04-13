@@ -1,21 +1,17 @@
-"use client"
+"use client";
 
 import * as z from "zod";
 import axios from "axios";
-import { CldVideoPlayer } from 'next-cloudinary';
-import 'next-cloudinary/dist/cld-video-player.css';
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import{ Button } from "@/components/ui/button";
-import { ImageIcon, Pencil, PlusCircle, Video, VideoIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Pencil, PlusCircle, Video } from "lucide-react";
 import { useState } from "react";
-import { Chapter, MuxData } from "@prisma/client";
-import Image from "next/image";
+import { Chapter } from "@prisma/client";
 import { FileUpload } from "@/components/file-upload";
 
  const formFormat = z.object({
     videoUrl: z.string().min(1),
-
  })
 
 interface ChapterVideoFormProps {
@@ -33,13 +29,10 @@ export const ChapterVideoForm = ({
     const [ isEditing, setIsEditing ] = useState(false)
     const toggleEditing = () => setIsEditing((current) => !current)
     const router = useRouter();
-    const videoUrl = `${initialData.videoUrl}`
 
     const onSubmit = async (values: z.infer<typeof formFormat>) => {
-        // console.log(values)
-        try{
-            const response = await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
-            console.log(response)
+        try {
+            await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
             toast.success("Chapter Updated", {
                 style: {
                     borderRadius: '10px',
@@ -49,17 +42,14 @@ export const ChapterVideoForm = ({
             })
             toggleEditing();
             router.refresh();
-        }
-        catch{
-            toast.error("Something went wrong", 
-                {
-                    style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                      }
-                }
-            )
+        } catch {
+            toast.error("Something went wrong", {
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                  }
+            })
         }
     }
     
@@ -83,20 +73,19 @@ export const ChapterVideoForm = ({
                             Change Chapter video   
                         </>
                     )}
-                    
                 </Button>
             </div>
             {!isEditing && (
                 !initialData.videoUrl ? (
-                    <div className="flex item-center justify-center h-60 bg-slate-200 rounded-md">
+                    <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
                         <Video className="h-10 w-10 text-slate-500"/>
                     </div>
                 ) : (
                     <div className="relative aspect-video mt-2">
-                       <CldVideoPlayer
-                            width="1920"
-                            height="1080"
-                            src={videoUrl}
+                        <video 
+                            src={initialData.videoUrl} 
+                            controls 
+                            className="w-full h-full rounded-md bg-black"
                         />
                     </div>
                 )
@@ -113,15 +102,15 @@ export const ChapterVideoForm = ({
                     />
 
                     <div className="text-xs text-muted-foreground mt-4">
-                        Upload this chapters&apos;s video
+                        Upload this chapter&apos;s video
                     </div>
                 </div>
             )}
             {initialData.videoUrl && !isEditing && (
                 <div className="text-xs text-muted-foreground mt-2">
-                    Videos can take a few minutes to process. Refresh the page if video those not appear.
+                    Videos can take a few minutes to process. Refresh the page if the video does not appear.
                 </div>
             )}
         </div>
     )
-}
+}

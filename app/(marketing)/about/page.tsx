@@ -1,5 +1,7 @@
-import { Award, Users, Target, TrendingUp, Globe, Shield } from "lucide-react";
+import { Award, Users, Target, TrendingUp, Globe, Shield, User2 } from "lucide-react";
+import Image from "next/image";
 import type { Metadata } from "next";
+import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "About Us | JESA World Technology",
@@ -15,13 +17,6 @@ const values = [
   { icon: TrendingUp, title: "Growth", description: "We champion continuous learning and invest in our team's professional development, creating a culture of excellence.", gradient: "from-indigo-500 to-blue-500" },
 ];
 
-const team = [
-  { name: "Emmanuel Adeyemi", role: "Chief Executive Officer", initials: "EA", gradient: "from-electric-blue-500 to-cyan-accent-500", bio: "20+ years in enterprise technology. Former CTO at leading pan-African bank." },
-  { name: "Chisom Nwachukwu", role: "Chief Technology Officer", initials: "CN", gradient: "from-purple-500 to-pink-500", bio: "Cloud & security architect. AWS & Azure certified. Former Google engineer." },
-  { name: "Fatima Bello", role: "Head of Consulting", initials: "FB", gradient: "from-amber-500 to-orange-500", bio: "Digital transformation specialist. MBA, Oxford. Led 50+ enterprise transformations." },
-  { name: "Olumide Fashola", role: "Head of Engineering", initials: "OF", gradient: "from-green-500 to-teal-500", bio: "Full-stack architect with deep expertise in distributed systems and microservices." },
-];
-
 const milestones = [
   { year: "2016", event: "Company founded in Lagos, Nigeria with a team of 5" },
   { year: "2018", event: "Crossed 50 enterprise clients; opened Abuja office" },
@@ -31,7 +26,11 @@ const milestones = [
   { year: "2025", event: "Launched JESA Academy — I.T. skills training platform" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const team = await db.teamMember.findMany({
+    orderBy: { order: "asc" },
+  });
+
   return (
     <div className="min-h-screen bg-navy-950 pt-20">
       {/* Hero */}
@@ -103,24 +102,38 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Team */}
+        {/* Team — fetched from backend */}
         <div>
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase text-electric-blue-400 bg-electric-blue-500/10 border border-electric-blue-500/20 mb-4">Our Team</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Leadership</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member) => (
-              <div key={member.name} className="glass-card rounded-2xl p-6 border border-white/5 text-center service-card">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.gradient} flex items-center justify-center text-white font-bold text-lg mx-auto mb-4`}>
-                  {member.initials}
+          {team.length > 0 ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {team.map((member) => (
+                <div key={member.id} className="glass-card rounded-2xl p-6 border border-white/5 text-center service-card group">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.gradient || "from-slate-500 to-slate-700"} flex items-center justify-center text-white font-bold text-lg mx-auto mb-4 relative overflow-hidden group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-black/20`}>
+                    {member.imageUrl ? (
+                      <Image src={member.imageUrl} alt={member.name} fill className="object-cover" />
+                    ) : (
+                      member.initials || member.name.charAt(0)
+                    )}
+                  </div>
+                  <h3 className="text-white font-semibold mb-1">{member.name}</h3>
+                  <p className="text-electric-blue-400 text-xs mb-3">{member.role}</p>
+                  {member.bio && (
+                    <p className="text-white/50 text-xs leading-relaxed">{member.bio}</p>
+                  )}
                 </div>
-                <h3 className="text-white font-semibold mb-1">{member.name}</h3>
-                <p className="text-electric-blue-400 text-xs mb-3">{member.role}</p>
-                <p className="text-white/50 text-xs leading-relaxed">{member.bio}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-white/5 rounded-3xl border border-dashed border-white/10">
+              <User2 className="w-12 h-12 text-white/20 mx-auto mb-4" />
+              <h3 className="text-white font-semibold text-lg">Our team is growing</h3>
+              <p className="text-white/40 text-sm mt-1">Check back soon to meet our experts.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

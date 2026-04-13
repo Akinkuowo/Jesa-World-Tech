@@ -68,3 +68,41 @@ export const sendPasswordResetEmail = async (
   });
 };
 
+export const sendContactInquiryEmail = async (
+  name: string,
+  email: string,
+  subject: string,
+  message: string,
+  phone?: string | null
+) => {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("⚠️ RESEND_API_KEY is not defined. Email suppression for: ", subject);
+    return;
+  }
+
+  await resend.emails.send({
+    from: "Contact Form <onboarding@resend.dev>",
+    to: "jesaworldtech@gmail.com",
+    subject: `New Inquiry: ${subject}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        <h2 style="color: #0E2954;">New Contact Form Submission</h2>
+        <p>You have received a new message from the contact form on JESA World Technology.</p>
+        
+        <div style="background-color: #f4f7fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+          <p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
+          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
+          <p><strong>Subject:</strong> ${subject}</p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;" />
+          <p><strong>Message:</strong></p>
+          <p style="white-space: pre-wrap;">${message}</p>
+        </div>
+        
+        <p style="margin-top: 25px; font-size: 12px; color: #666;">
+          This email was sent from the JESA World Technology platform.
+        </p>
+      </div>
+    `,
+  });
+};
+

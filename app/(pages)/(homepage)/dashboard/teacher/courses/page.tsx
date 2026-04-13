@@ -28,7 +28,7 @@ const TeacherPage = async () => {
     return ( 
         <div className="p-6">
             <Button asChild>
-                <Link href="/teacher/courses/create">
+                <Link href="/dashboard/teacher/courses/create">
                     <PlusCircle className="h-4 w-4 mr-2"/>
                     New Course
                 </Link>

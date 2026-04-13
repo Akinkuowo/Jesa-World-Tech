@@ -78,6 +78,11 @@ const adminMenu = [
         label: "Manage Team",
         href: "/dashboard/admin/team"
     },
+    {
+        icon: PenTool,
+        label: "Manage Footer",
+        href: "/dashboard/admin/footer"
+    },
 ]
 
 export const Sidebarmenu = () => {

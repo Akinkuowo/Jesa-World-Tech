@@ -332,3 +332,22 @@ model TeamMember {
 
   @@index([order])
 }
+
+model FooterConfig {
+  id                     String   @id @default("default")
+  ctaTitle               String   @default("Ready to Transform Your Business?")
+  ctaDescription         String   @default("Let's build something extraordinary together. Our team of experts is ready to deliver tailored I.T. solutions.")
+  ctaButtonText          String   @default("Start a Project")
+  ctaButtonLink          String   @default("/contact")
+  ctaSecondaryButtonText String   @default("Create Free Account")
+  ctaSecondaryButtonLink String   @default("/sign-up")
+  brandDescription       String   @default("A leading I.T. firm delivering innovative technology solutions — from cloud infrastructure to custom software — empowering businesses across Africa and beyond.")
+  address                String   @default("Lagos, Nigeria")
+  email                  String   @default("hello@jesaworldtech.com")
+  phone                  String   @default("+234 800 JESA TECH")
+  socialLinks            Json     // Array of { icon: string, href: string, label: string }
+  footerLinks            Json     // Object { Category: Array<{ label, href }> }
+  copyrightText          String   @default("JESA World Technology. All rights reserved.")
+  
+  updatedAt              DateTime @updatedAt
+}

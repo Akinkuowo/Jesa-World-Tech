@@ -30,10 +30,10 @@ export default function ContactPage() {
       <div className="max-w-5xl mx-auto px-4 mb-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: Mail, label: "Email", value: "hello@jesaworldtech.com" },
-            { icon: Phone, label: "Phone", value: "+234 800 JESA TECH" },
-            { icon: MapPin, label: "Location", value: "Victoria Island, Lagos" },
-            { icon: Clock, label: "Business Hours", value: "Mon–Fri, 8am–6pm WAT" },
+            { icon: Mail, label: "Email", value: "info@jesaworldtech.com.ng" },
+            { icon: Phone, label: "Phone", value: "+234 905 034 5898" },
+            { icon: MapPin, label: "Location", value: "Ago Palace Way, Lagos, Nigeria" },
+            { icon: Clock, label: "Business Hours", value: "Mon – Fri, 8am – 6pm WAT" },
           ].map(({ icon: Icon, label, value }) => (
             <div key={label} className="glass-card rounded-xl p-4 border border-white/5 flex items-center gap-3">
               <Icon className="w-5 h-5 text-cyan-accent-400 flex-shrink-0" />

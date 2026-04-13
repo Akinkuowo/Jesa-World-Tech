@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { sendContactInquiryEmail } from "@/lib/mail";
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,6 +34,20 @@ export async function POST(req: NextRequest) {
         message: message.trim(),
       },
     });
+
+    // Send email notification
+    try {
+      await sendContactInquiryEmail(
+        name.trim(),
+        email.trim().toLowerCase(),
+        subject.trim(),
+        message.trim(),
+        phone?.trim()
+      );
+    } catch (emailError) {
+      console.error("[CONTACT_EMAIL_ERROR]", emailError);
+      // We don't return an error response here because the data is already saved to the DB
+    }
 
     return NextResponse.json(
       { success: true, id: inquiry.id },
