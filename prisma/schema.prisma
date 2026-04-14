@@ -354,3 +354,18 @@ model FooterConfig {
   
   updatedAt              DateTime @updatedAt
 }
+
+model SEOConfig {
+  id              String   @id @default("default")
+  titleTemplate   String   @default("%s | JESA World Technology")
+  defaultTitle    String   @default("JESA World Technology | I.T. Solutions & Digital Innovation")
+  description     String   @default("Leading I.T. firm delivering cutting-edge software development, cloud solutions, and IT consulting across Africa.")
+  keywords        String   @default("IT firm, software development, cloud solutions, Nigeria")
+  ogImage         String?
+  twitterHandle   String   @default("@jesaworldtech")
+  robotsTxt       String   @default("User-agent: *\nAllow: /\nDisallow: /dashboard/\nDisallow: /api/\nDisallow: /admin/")
+  googleAdsId     String?
+  googleTagManagerId String?
+  
+  updatedAt       DateTime @updatedAt
+}

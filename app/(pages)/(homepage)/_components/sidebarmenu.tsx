@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User, ShieldCheck, PenTool, Users2, Rocket, LogOut } from "lucide-react"
+import { BarChart, BookAIcon, BookOpen, BriefcaseBusiness, GanttChartSquare, Home, Layout, List, Newspaper, Radio, User, ShieldCheck, PenTool, Users2, Rocket, LogOut, Search } from "lucide-react"
 import { Sidebaritem } from "./sidebaritem";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -93,6 +93,11 @@ const adminMenu = [
         icon: PenTool,
         label: "Manage Footer",
         href: "/dashboard/admin/footer"
+    },
+    {
+        icon: Search,
+        label: "SEO Management",
+        href: "/dashboard/admin/seo"
     },
 ]
 

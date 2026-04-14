@@ -9,39 +9,56 @@ import "@/app/globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://jesaworldtech.com"),
-  title: {
-    default: "JESA World Technology | I.T. Solutions & Digital Innovation",
-    template: "%s | JESA World Technology"
-  },
-  description: "JESA World Technology is a leading I.T. firm delivering cutting-edge software development, cloud solutions, cybersecurity, and IT consulting services to businesses across Africa and beyond.",
-  keywords: ["IT firm", "software development", "cloud solutions", "cybersecurity", "IT consulting", "data analytics", "Nigeria", "Africa", "JESA World", "Digital Innovation"],
-  authors: [{ name: "JESA World Technology", url: "https://jesaworldtech.com" }],
-  creator: "JESA World Technology",
-  publisher: "JESA World Technology",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "JESA World Technology | I.T. Solutions & Digital Innovation",
-    description: "Leading I.T. firm delivering cutting-edge technology solutions across Africa and beyond.",
-    url: "https://jesaworldtech.com",
-    siteName: "JESA World Technology",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "JESA World Technology | I.T. Solutions & Digital Innovation",
-    description: "Leading I.T. firm delivering cutting-edge technology solutions across Africa and beyond.",
-    creator: "@jesaworldtech",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+import { db } from "@/lib/db";
+
+export async function generateMetadata(): Promise<Metadata> {
+  // Use safe access to prevent crash if Prisma client is stale
+  const config = await (db as any).sEOConfig?.findUnique({
+    where: { id: "default" }
+  }).catch(() => null);
+
+  const titleTemplate = config?.titleTemplate || "%s | JESA World Technology";
+  const defaultTitle = config?.defaultTitle || "JESA World Technology | I.T. Solutions";
+  const description = config?.description || "Leading I.T. firm delivering cutting-edge software development and cloud solutions.";
+
+  return {
+    metadataBase: new URL("https://jesaworldtech.com"),
+    title: {
+      default: defaultTitle,
+      template: titleTemplate
+    },
+    description: description,
+    keywords: config?.keywords.split(",") || ["IT firm", "software development"],
+    authors: [{ name: "JESA World Technology", url: "https://jesaworldtech.com" }],
+    creator: "JESA World Technology",
+    publisher: "JESA World Technology",
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: defaultTitle,
+      description: description,
+      url: "https://jesaworldtech.com",
+      siteName: "JESA World Technology",
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: defaultTitle,
+      description: description,
+      creator: config?.twitterHandle || "@jesaworldtech",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    icons: {
+      icon: "/icon.png",
+      apple: "/icon.png",
+    },
+  };
+}
 
 import { CookieBanner } from "@/components/cookie-banner";
 
