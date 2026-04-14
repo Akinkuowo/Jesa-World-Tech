@@ -79,8 +79,8 @@ export default async function CareersPage() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-6">
-              {jobs.map((job) => {
-                const skills = job.skills ? job.skills.split(",").map(s => s.trim()) : [];
+              {jobs.map((job: any) => {
+                const skills = job.skills ? job.skills.split(",").map((s: string) => s.trim()) : [];
                 return (
                   <div key={job.id} className="group glass-card rounded-2xl p-6 border border-white/5 hover:border-white/15 hover:bg-white/[0.05] transition-all duration-300 service-card">
                     <div className={`h-1 w-12 rounded-full bg-gradient-to-r ${job.gradient || "from-blue-500 to-cyan-500"} mb-5`} />
@@ -98,7 +98,7 @@ export default async function CareersPage() {
                     </div>
                     {skills.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-5">
-                        {skills.map((s) => (
+                        {skills.map((s: string) => (
                           <span key={s} className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/40 border border-white/5">{s}</span>
                         ))}
                       </div>

@@ -22,7 +22,7 @@ export const getEnrolledCourse = async ({ userId }: GetEnrolledCoursesProps) => 
   });
 
   // Extract the courses from the enrollments
-  const enrolledCourses = enrollments.map((enrollment) => enrollment.course);
+  const enrolledCourses = enrollments.map((enrollment: any) => enrollment.course);
 
   return enrolledCourses;
 };

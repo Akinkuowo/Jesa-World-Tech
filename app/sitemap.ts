@@ -14,7 +14,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/team",
     "/portfolio",
     "/blog",
-  ].map((route) => ({
+    "/privacy",
+    "/terms",
+    "/cookies",
+  ].map((route: string) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
@@ -27,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, updatedAt: true },
   });
 
-  const blogRoutes = posts.map((post) => ({
+  const blogRoutes = posts.map((post: any) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updatedAt,
     changeFrequency: "weekly" as const,
@@ -40,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { id: true, courseId: true, updatedAt: true },
   });
 
-  const courseRoutes = chapters.map((chapter) => ({
+  const courseRoutes = chapters.map((chapter: any) => ({
     url: `${baseUrl}/courses/${chapter.courseId}/chapters/${chapter.id}`,
     lastModified: chapter.updatedAt,
     changeFrequency: "weekly" as const,

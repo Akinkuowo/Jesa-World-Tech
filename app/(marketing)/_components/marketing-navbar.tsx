@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Zap, LogOut } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { logout } from "@/actions/auth";
+import { Logo } from "../../(pages)/(homepage)/_components/logo";
 
 const navLinks = [
   { label: "Services", href: "/services" },
@@ -26,7 +26,6 @@ export default function MarketingNavbar() {
   const isSignedIn = !!user;
 
   useEffect(() => {
-    // ... handleScroll logic same
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -40,19 +39,11 @@ export default function MarketingNavbar() {
           : "bg-transparent"
       }`}
     >
-      {/* ... structure same ... */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center group cursor-pointer transition-opacity hover:opacity-90">
-            <div className="relative w-48 h-14">
-              <Image
-                src="/logo.png"
-                alt="JESA World Technology Logo"
-                fill
-                className="object-contain brightness-0 invert"
-              />
-            </div>
+            <Logo className="brightness-0 invert" />
           </Link>
 
           {/* Desktop Nav */}

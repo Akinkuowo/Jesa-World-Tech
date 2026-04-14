@@ -36,7 +36,7 @@ const MySubscriptionPage = async () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {subscriptions.map((sub) => (
+                    {subscriptions.map((sub: any) => (
                         <div key={sub.id} className="bg-white shadow-sm border border-slate-200 rounded-3xl p-8 hover:shadow-md transition-all group">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="p-3 rounded-2xl bg-electric-blue-50 text-electric-blue-600 group-hover:scale-110 transition-transform">

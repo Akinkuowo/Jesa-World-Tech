@@ -70,7 +70,7 @@ const CourseIdPage = async (
         course.description,
         course.categoryId,
         course.levelId,
-        course.chapters.some(chapter => chapter.isPublished)
+        course.chapters.some((chapter: any) => chapter.isPublished)
     ]
 
     const totalFileds = requiredField.length;
@@ -123,7 +123,7 @@ const CourseIdPage = async (
                         <CategoryForm 
                             initialData={course}
                             courseId={course.id}
-                            options={categories.map((category) => ({
+                            options={categories.map((category: any) => ({
                                 label: category.name,
                                 value: category.id
                             }))}
@@ -146,7 +146,7 @@ const CourseIdPage = async (
                         <CourseLevelForm 
                             initialData={course}
                             courseId={course.id}
-                            options={courseLevel.map((level) => ({
+                            options={courseLevel.map((level: any) => ({
                                 label: level.name,
                                 value: level.id
                             }))}

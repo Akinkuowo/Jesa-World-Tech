@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-electric-blue-500 to-cyan-accent-500 flex items-center justify-center text-white text-xs font-bold">
                   {(post.authorName || "JT")
                     .split(" ")
-                    .map((n) => n[0])
+                    .map((n: string) => n[0])
                     .join("")}
                 </div>
                 <span className="font-medium text-white/70">
@@ -281,7 +281,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {relatedPosts.map((related) => (
+              {relatedPosts.map((related: any) => (
                 <Link
                   key={related.id}
                   href={`/blog/${related.slug}`}

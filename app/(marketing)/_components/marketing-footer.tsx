@@ -49,6 +49,8 @@ const defaultSocials = [
   { icon: "Youtube", href: "#", label: "YouTube" },
 ];
 
+import { Logo } from "../../(pages)/(homepage)/_components/logo";
+
 export default async function MarketingFooter() {
   const footerConfig = await db?.footerConfig?.findUnique({
     where: { id: "default" },
@@ -107,14 +109,7 @@ export default async function MarketingFooter() {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center group cursor-pointer transition-opacity hover:opacity-90">
-              <div className="relative w-48 h-14">
-                <Image
-                  src="/logo.png"
-                  alt="JESA World Technology Logo"
-                  fill
-                  className="object-contain brightness-0 invert"
-                />
-              </div>
+              <Logo className="brightness-0 invert" />
             </Link>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               {config.brandDescription}
@@ -181,9 +176,9 @@ export default async function MarketingFooter() {
             © {new Date().getFullYear()} {config.copyrightText}
           </p>
           <div className="flex items-center gap-6 text-xs text-white/30">
-            <Link href="#" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white/60 transition-colors">Terms of Service</Link>
-            <Link href="#" className="hover:text-white/60 transition-colors">Cookie Policy</Link>
+            <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</Link>
+            <Link href="/cookies" className="hover:text-white/60 transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

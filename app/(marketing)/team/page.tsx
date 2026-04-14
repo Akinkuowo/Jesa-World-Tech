@@ -48,7 +48,7 @@ export default async function TeamPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-32">
         
         {/* Leadership Section */}
-        {members.filter(m => m.order < 10).length > 0 && (
+        {members.filter((m: any) => m.order < 10).length > 0 && (
           <div className="space-y-12">
             <div className="text-center">
               <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Leadership Hub</h2>
@@ -56,7 +56,7 @@ export default async function TeamPage() {
             </div>
             
             <div className="grid md:grid-cols-2 gap-8">
-              {members.filter(m => m.order < 10).map((leader) => (
+              {members.filter((m: any) => m.order < 10).map((leader: any) => (
                 <div key={leader.id} className="glass-card rounded-3xl p-8 border border-white/5 flex flex-col sm:flex-row gap-6 items-start group hover:border-electric-blue-500/30 transition-all duration-300">
                   <div className={`w-24 h-24 sm:w-32 sm:h-32 shrink-0 rounded-2xl relative overflow-hidden bg-gradient-to-br ${leader.gradient || 'from-slate-500 to-slate-700'} flex items-center justify-center text-white font-display font-bold text-3xl sm:text-4xl shadow-xl shadow-black/20 group-hover:scale-105 transition-transform duration-500`}>
                     {leader.imageUrl ? (
@@ -92,7 +92,7 @@ export default async function TeamPage() {
         )}
 
         {/* Global Team Section */}
-        {members.filter(m => m.order >= 10).length > 0 && (
+        {members.filter((m: any) => m.order >= 10).length > 0 && (
           <div className="space-y-12 relative">
             <div className="absolute top-1/2 -right-1/4 w-[400px] h-[400px] blob bg-cyan-accent-600 opacity-10" />
             <div className="absolute top-1/4 -left-1/4 w-[300px] h-[300px] blob bg-purple-600 opacity-10" />
@@ -103,7 +103,7 @@ export default async function TeamPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative z-10">
-              {members.filter(m => m.order >= 10).map((member) => (
+              {members.filter((m: any) => m.order >= 10).map((member: any) => (
                 <div key={member.id} className="glass-card rounded-2xl p-6 border border-white/5 text-center service-card group">
                   <div className={`w-20 h-20 rounded-2xl relative overflow-hidden bg-gradient-to-br ${member.gradient || 'from-slate-500 to-slate-700'} flex items-center justify-center text-white font-bold text-xl mx-auto mb-4 group-hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-black/20`}>
                     {member.imageUrl ? (

@@ -47,7 +47,7 @@ export default async function PortfolioPage() {
       {/* Projects Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+          {projects.map((project: any) => (
             <div key={project.title} className="group glass-card rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 hover:shadow-xl transition-all duration-300 service-card flex flex-col">
               <div className="relative aspect-video w-full overflow-hidden">
                 {project.imageUrl ? (
@@ -76,7 +76,7 @@ export default async function PortfolioPage() {
                 </div>
                 {/* Tech Tags */}
                 <div className="flex flex-wrap gap-1.5">
-                  {project.techStack.split(",").map((t) => (
+                  {project.techStack.split(",").map((t: string) => (
                     <span key={t.trim()} className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/40 border border-white/5">{t.trim()}</span>
                   ))}
                 </div>

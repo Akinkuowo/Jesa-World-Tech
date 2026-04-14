@@ -43,6 +43,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { CookieBanner } from "@/components/cookie-banner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +57,7 @@ export default function RootLayout({
           <ConfettiProvider />
           <ToastProvider />
           {children}
+          <CookieBanner />
         </AuthProvider>
       </body>
     </html>

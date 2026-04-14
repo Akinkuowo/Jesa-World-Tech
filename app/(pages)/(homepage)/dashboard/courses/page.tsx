@@ -33,7 +33,7 @@ const Courses = async () => {
       <Categories items={categories} />
 
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
-        {enrolledCourses.map((course) => (
+        {enrolledCourses.map((course: any) => (
           <Link href={`/courses/${course.id}`} key={course.id} className="course-card">
             <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
               <div className="relative w-full aspect-video rounded-md overflow-hidden">

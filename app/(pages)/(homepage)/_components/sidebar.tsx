@@ -6,7 +6,7 @@ export const Sidebar = () => {
     return (
         <div className="h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm">
             <div className="p-6">
-                <Link href="/">
+                <Link href="/" className="flex items-center group cursor-pointer transition-opacity hover:opacity-90">
                     <Logo />
                 </Link>
             </div>

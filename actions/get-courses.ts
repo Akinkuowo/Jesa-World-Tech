@@ -50,8 +50,8 @@ export const getCourse = async ({
         });
 
         const coursesWithProgress = await Promise.all(
-            courses.map(async (course) => {
-                const progress = await GetProgress(course.id, userId);
+            courses.map(async (course: any) => {
+                const progress = await GetProgress(userId, course.id);
                 return {
                     ...course,
                     progress,

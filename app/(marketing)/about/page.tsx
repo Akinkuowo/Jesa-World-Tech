@@ -28,7 +28,7 @@ const values = [
 
 const milestones = [
   { year: "2016", event: "Company founded in Lagos, Nigeria with a team of 5" },
-  { year: "2018", event: "Crossed 50 enterprise clients; opened Abuja office" },
+  { year: "2018", event: "Crossed 50 enterprise clients" },
   { year: "2020", event: "Launched 24/7 Security Operations Center (SOC)" },
   { year: "2022", event: "Expanded to East Africa; team grew to 40+" },
   { year: "2024", event: "Achieved ISO 27001 certification; 150+ clients served" },
@@ -119,7 +119,7 @@ export default async function AboutPage() {
           </div>
           {team.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {team.map((member) => (
+              {team.map((member: any) => (
                 <div key={member.id} className="glass-card rounded-2xl p-6 border border-white/5 text-center service-card group">
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.gradient || "from-slate-500 to-slate-700"} flex items-center justify-center text-white font-bold text-lg mx-auto mb-4 relative overflow-hidden group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-black/20`}>
                     {member.imageUrl ? (

@@ -128,7 +128,7 @@ export default async function BlogPage() {
 
         {/* Posts Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.slice(1).map((post) => (
+          {posts.slice(1).map((post: any) => (
             <Link key={post.id} href={`/blog/${post.slug}`} className="group bg-white/5 rounded-3xl overflow-hidden border border-white/5 hover:border-white/10 transition-all flex flex-col">
               <div className="relative aspect-video overflow-hidden">
                 {post.imageUrl ? (
