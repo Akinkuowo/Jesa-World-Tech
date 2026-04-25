@@ -25,7 +25,7 @@ const MySubscriptionPage = async () => {
                     </div>
                     <h2 className="text-xl font-bold text-slate-800">No active subscriptions</h2>
                     <p className="text-slate-500 max-w-sm">
-                        You haven't joined any professional learning paths yet. Subscribe to unlock elite technical guides and career growth tools.
+                        You haven&apos;t joined any professional learning paths yet. Subscribe to unlock elite technical guides and career growth tools.
                     </p>
                     <Link href="/dashboard/plan">
                         <Button className="mt-4 bg-electric-blue-600 hover:bg-electric-blue-700 text-white rounded-2xl h-12 px-8 font-bold flex items-center gap-x-2 transition-all shadow-lg shadow-electric-blue-200">

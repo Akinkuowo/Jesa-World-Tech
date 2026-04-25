@@ -38,7 +38,7 @@ export const Chart = ({ data }: ChartProps) => {
             <Tooltip 
               cursor={{ fill: 'rgba(56, 189, 248, 0.1)' }}
               contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-              formatter={(value: number) => [`₦${value.toLocaleString()}`, "Revenue"]}
+              formatter={(value: any) => [`₦${Number(value).toLocaleString()}`, "Revenue"]}
             />
             <Bar
               dataKey="total"

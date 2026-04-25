@@ -165,7 +165,7 @@ export const SEOForm = ({ initialData }: SEOFormProps) => {
                 <FormItem>
                   <FormLabel className="font-bold text-slate-700">Google Tag Manager ID</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} placeholder="GTM-XXXXXXX" {...field || ""} className="rounded-xl h-12" />
+                    <Input disabled={isSubmitting} placeholder="GTM-XXXXXXX" {...field} value={field.value || ""} className="rounded-xl h-12" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

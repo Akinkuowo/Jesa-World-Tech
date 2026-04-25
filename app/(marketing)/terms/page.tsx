@@ -71,7 +71,7 @@ export default function TermsPage() {
       <h2>8. Changes to Terms</h2>
       <p>
         We may update our Terms of Service from time to time. We will notify you of any changes by posting the new Terms on
-        this page and updating the "Last Updated" date.
+        this page and updating the &quot;Last Updated&quot; date.
       </p>
     </LegalContent>
   );

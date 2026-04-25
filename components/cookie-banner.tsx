@@ -43,7 +43,7 @@ export const CookieBanner = () => {
                             </h3>
                             <p className="text-white/60 text-sm mt-1 leading-relaxed">
                                 We use cookies to enhance your experience, analyze site traffic, and provide personalized training content. 
-                                By clicking <b>"Accept"</b>, you agree to our storage of cookies on your device.
+                                By clicking <b>&quot;Accept&quot;</b>, you agree to our storage of cookies on your device.
                             </p>
                         </div>
 

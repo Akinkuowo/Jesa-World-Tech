@@ -52,7 +52,7 @@ export default function CookiesPage() {
       </p>
       <ul>
         <li>To find out more about cookies, including how to see what cookies have been set, visit <strong>www.aboutcookies.org</strong>.</li>
-        <li>You can choose to opt-out of analytics tracking through your browser's "Do Not Track" settings or specific opt-out tools provided by analytics providers.</li>
+        <li>You can choose to opt-out of analytics tracking through your browser&apos;s &quot;Do Not Track&quot; settings or specific opt-out tools provided by analytics providers.</li>
       </ul>
 
       <h2>5. Updates to This Policy</h2>
